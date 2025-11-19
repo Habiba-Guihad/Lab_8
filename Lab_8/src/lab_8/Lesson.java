@@ -13,11 +13,13 @@ public class Lesson {
     private String lessonId;
     private String title;
     private String content;
+    private Quiz quiz;
 
     public Lesson(String lessonId, String title, String content) {
         this.lessonId = lessonId;
         this.title = title;
         this.content = content;
+        this.quiz=null;
     }
 
     public String getLessonId() {
@@ -32,6 +34,10 @@ public class Lesson {
         return content;
     }
 
+    public Quiz getQuiz() {
+        return quiz;
+    }
+    
     public void setTitle(String title) {
         this.title = title;
     }
@@ -40,6 +46,10 @@ public class Lesson {
         this.content = content;
     }
 
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+    
     @Override
     public String toString() {
         return lessonId + ": " + title + " - " + content;

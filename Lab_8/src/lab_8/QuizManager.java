@@ -15,7 +15,7 @@ public class QuizManager {
         if(lesson==null){
             return null;
         }
-        return lesson.getQuiz;
+        return lesson.getQuiz();
     }
     public int evaluateQuiz(Quiz quiz,List<Integer>userAnswers){
         if(quiz==null)
