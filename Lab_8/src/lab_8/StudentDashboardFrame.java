@@ -1,4 +1,4 @@
-
+package lab_8;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +59,8 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
             "test@email.com",
             "123",
             new ArrayList<>(),  // empty enrolled courses
-            new HashMap<>()     // empty progress
+            new HashMap<>(),
+            new ArrayList<>()// empty progress
     ));
 }
     
@@ -146,6 +147,7 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         listLessons = new javax.swing.JList<>();
         btnMark = new javax.swing.JButton();
+        btnCertificates = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -208,6 +210,13 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
             }
         });
 
+        btnCertificates.setText("View Certificates");
+        btnCertificates.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCertificatesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -223,7 +232,7 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addComponent(btnEnroll)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                         .addComponent(btnRefresh)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -247,8 +256,10 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnMark)
-                .addGap(100, 100, 100))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCertificates)
+                    .addComponent(btnMark))
+                .addGap(95, 95, 95))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,7 +286,9 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
                             .addComponent(btnEnroll))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnMark)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCertificates)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -348,12 +361,26 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
         // refresh lessons list
         listEnrolledValueChanged(null);
     }
+    if (student.hasCompletedCourse(selectedCourse))
+    {
+    int cId = Integer.parseInt(selectedCourse.getCourseId().replaceAll("\\D", ""));
+    student.awardCertificate(cId);
+    db.saveUsers();
+
+    JOptionPane.showMessageDialog(this,
+        " Congratulations! You completed this course, A certificate has been issued.");
+    }
     }//GEN-LAST:event_btnMarkActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
        db = new JsonDatabaseManager(); // reload from json
     refreshLists();
     }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void btnCertificatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCertificatesActionPerformed
+       new CertificateFrame(student, db);
+        
+    }//GEN-LAST:event_btnCertificatesActionPerformed
  
      private void listEnrolledValueChanged(javax.swing.event.ListSelectionEvent evt) {
         int index = listEnrolled.getSelectedIndex();
@@ -415,6 +442,7 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCertificates;
     private javax.swing.JButton btnEnroll;
     private javax.swing.JButton btnMark;
     private javax.swing.JButton btnRefresh;
