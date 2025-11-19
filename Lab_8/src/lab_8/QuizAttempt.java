@@ -16,7 +16,7 @@ public class QuizAttempt {
     private int score;
     private boolean passed;
     private LocalDateTime attemptTime;
-
+    private Quiz quiz;
     public QuizAttempt(String studentId, String courseId, String lessonId, int score, boolean passed, LocalDateTime attemptTime) {
         this.studentId = studentId;
         this.courseId = courseId;
@@ -58,6 +58,10 @@ public class QuizAttempt {
 
     public LocalDateTime getAttemptTime() {
         return attemptTime;
+    }
+
+    public Quiz getQuiz() {
+        return quiz;
     }
     
 }
