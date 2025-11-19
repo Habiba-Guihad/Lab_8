@@ -1,4 +1,4 @@
-/*
+package lab_8;/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -99,8 +99,25 @@ public class JsonDatabaseManager {
 
                     progress.put(Integer.parseInt(courseId), lessons);
                 }
+                ArrayList<Certificate> certificates = new ArrayList<>();
+                JSONArray certArr = obj.optJSONArray("certificates");
 
-                users.add(new Student(userId, username, email, passwordHash, enrolled, progress));
+               if (certArr != null) {
+                for (int k = 0; k < certArr.length(); k++) {
+                     JSONObject co = certArr.getJSONObject(k);
+
+                     Certificate c = new Certificate(
+                co.getString("certificateId"),
+                userId,
+                co.getInt("courseId"),
+                co.getString("dateIssued")
+        );
+        certificates.add(c);
+    }
+}
+               
+
+                users.add(new Student(userId, username, email, passwordHash, enrolled, progress, certificates));
             } else if (role.equals("instructor")) {
 
                 ArrayList<String> created = new ArrayList<>();
@@ -136,6 +153,15 @@ public class JsonDatabaseManager {
                             new JSONArray(s.getProgress().get(courseId)));
                 }
                 obj.put("progress", progObj);
+                JSONArray certArr = new JSONArray();
+             for (Certificate c : s.getCertificates()) {
+                JSONObject co = new JSONObject();
+                 co.put("certificateId", c.getCertificateId());
+                 co.put("courseId", c.getCourseId());
+                 co.put("dateIssued", c.getDateIssued());
+                 certArr.put(co);
+                }
+                obj.put("certificates", certArr);
             }
 
             if (u instanceof Instructor ins) {
