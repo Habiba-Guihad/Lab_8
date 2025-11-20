@@ -59,15 +59,15 @@ public class AdminFrame extends javax.swing.JFrame {
         header.setFont(new Font("Segoe UI", Font.BOLD, 24));
         header.setBounds(20, 10, 500, 40);
 
-        // TABLE — Pending Courses
+       
         String[] columns = {"Course ID", "Title", "Instructor", "Status"};
-        Object[][] data = {}; // will be filled using backend
+        Object[][] data = {}; 
 
         pendingTable = new JTable(data, columns);
         JScrollPane scroll = new JScrollPane(pendingTable);
         scroll.setBounds(20, 70, 500, 400);
 
-        // DETAILS PANEL
+ 
         JPanel detailsPanel = new JPanel();
         detailsPanel.setLayout(null);
         detailsPanel.setBackground(Color.white);
@@ -89,7 +89,6 @@ public class AdminFrame extends javax.swing.JFrame {
         detailsPanel.add(instructorLabel);
         detailsPanel.add(descLabel);
 
-        // APPROVE / REJECT BUTTONS
         approveBtn = new JButton("Approve");
         rejectBtn = new JButton("Reject");
 
@@ -105,7 +104,7 @@ public class AdminFrame extends javax.swing.JFrame {
         approveBtn.setBounds(550, 350, 140, 40);
         rejectBtn.setBounds(710, 350, 140, 40);
 
-        // LISTENERS
+  
         pendingTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 fillDetails();
@@ -141,12 +140,10 @@ public class AdminFrame extends javax.swing.JFrame {
 
     private void approveCourse() {
         JOptionPane.showMessageDialog(this, "Course Approved (Backend Call Needed)");
-        // call backend approveCourse()
     }
 
     private void rejectCourse() {
         JOptionPane.showMessageDialog(this, "Course Rejected (Backend Call Needed)");
-        // call backend rejectCourse()
     }
 
     /**
