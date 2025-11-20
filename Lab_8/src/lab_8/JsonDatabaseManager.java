@@ -110,7 +110,10 @@ public class JsonDatabaseManager {
                 co.getString("certificateId"),
                 userId,
                 co.getInt("courseId"),
-                co.getString("dateIssued")
+                co.getString("dateIssued"),
+                co.optString("filePath", "")
+                             
+                             
         );
         certificates.add(c);
     }
@@ -159,6 +162,7 @@ public class JsonDatabaseManager {
                  co.put("certificateId", c.getCertificateId());
                  co.put("courseId", c.getCourseId());
                  co.put("dateIssued", c.getDateIssued());
+                 co.put("filePath", c.getFilePath());
                  certArr.put(co);
                 }
                 obj.put("certificates", certArr);
