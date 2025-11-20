@@ -17,22 +17,13 @@ public class QuizAttempt {
     private boolean passed;
     private LocalDateTime attemptTime;
     private Quiz quiz;
-    public QuizAttempt(String studentId, String courseId, String lessonId, int score, boolean passed, LocalDateTime attemptTime) {
-        this.studentId = studentId;
-        this.courseId = courseId;
-        this.lessonId = lessonId;
-        this.score=score;
-        this.passed=passed;
-        this.attemptTime =attemptTime;
-        
-    }
-
-    public QuizAttempt(String studentId, String courseId, String lessonId, int score, boolean passed) {
+    public QuizAttempt(String studentId, String courseId, String lessonId, int score, boolean passed,Quiz quiz) {
         this.studentId = studentId;
         this.courseId = courseId;
         this.lessonId = lessonId;
         this.score = score;
         this.passed = passed;
+        this.quiz=quiz;
         this.attemptTime = LocalDateTime.now();
     }
     
