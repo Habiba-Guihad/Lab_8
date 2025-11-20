@@ -149,6 +149,7 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
         btnMark = new javax.swing.JButton();
         btnCertificates = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -225,6 +226,13 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
             }
         });
 
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -246,21 +254,25 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnCertificates)
-                                    .addComponent(btnMark))
-                                .addGap(67, 67, 67))
+                                .addComponent(btnBack))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnEnroll)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                                .addComponent(btnRefresh)
+                                .addComponent(btnRefresh)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(167, 167, 167)
+                                    .addComponent(jLabel1))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(74, 74, 74)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(106, 106, 106)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(167, 167, 167)
-                                        .addComponent(jLabel1))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(74, 74, 74)
-                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                    .addComponent(btnCertificates)
+                                    .addComponent(btnMark))
+                                .addGap(67, 67, 67)))))
                 .addGap(28, 28, 28))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,7 +315,9 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
                         .addComponent(btnCertificates))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(jButton1)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(btnBack))))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -394,7 +408,8 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnCertificatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCertificatesActionPerformed
-       new CertificateFrame(student, db);
+       this.setVisible(false);
+    new CertificateFrame(student, db, this).setVisible(true);
         
     }//GEN-LAST:event_btnCertificatesActionPerformed
 
@@ -406,6 +421,11 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
             new LoginFrame().setVisible(true);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+         this.dispose();
+         new LoginFrame().setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
  
      private void listEnrolledValueChanged(javax.swing.event.ListSelectionEvent evt) {
         int index = listEnrolled.getSelectedIndex();
@@ -467,6 +487,7 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCertificates;
     private javax.swing.JButton btnEnroll;
     private javax.swing.JButton btnMark;
