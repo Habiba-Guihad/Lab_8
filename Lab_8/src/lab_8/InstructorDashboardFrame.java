@@ -1,3 +1,4 @@
+package lab_8;
 
 import javax.swing.JOptionPane;
 
