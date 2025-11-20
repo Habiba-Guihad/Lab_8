@@ -10,16 +10,23 @@ import java.util.List;
  * @author Dell
  */
 public class Quiz {
+    private String title;
     private String lessonId;
     private int passingScore;
     private List<Question>questions;
+   
 
-    public Quiz(String lessonId, int passingScore, List<Question> questions) {
+    public Quiz(String title,String lessonId, int passingScore, List<Question> questions) {
+        this.title=title;
         this.lessonId = lessonId;
         this.passingScore = passingScore;
-        this.questions = new ArrayList<>();
+        this.questions =questions;
     }
 
+    public String getTitle() {
+        return title;
+    }
+    
     public String getLessonId() {
         return lessonId;
     }
