@@ -181,7 +181,10 @@ public class JsonDatabaseManager {
 
         writeFile(USERS_FILE, arr.toString(4));
     }
-
+    public void saveUser(User u) {
+        users.add(u);
+        saveUsers();
+    }
     private void loadCourses() {
         courses.clear();
 
