@@ -14,7 +14,6 @@ public class Admin extends User {
         super(userId, Role.ADMIN, username, email, passwordHash);
     }
 
-     // admin by3ml approve aw reject through el CourseManager
     public boolean approveCourse(CourseManager courseManager, String courseId) {
         return courseManager.approveCourse(courseId);
     }
@@ -23,4 +22,3 @@ public class Admin extends User {
         return courseManager.rejectCourse(courseId);
     }
 }
-
