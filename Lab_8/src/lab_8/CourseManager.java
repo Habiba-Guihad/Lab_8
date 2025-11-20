@@ -18,32 +18,30 @@ public class CourseManager {
         this.db = db;
     }
 
-    
     private String generateCourseId() {
         ArrayList<Course> courses = db.getCourses();
         return "C" + (courses.size() + 1);
     }
 
-    
     public Course addCourse(String title, String description, String instructorId) {
-        if (title == null || title.trim().isEmpty()) 
+        if (title == null || title.trim().isEmpty())
             return null;
 
         ArrayList<Course> courses = db.getCourses();
-        if (courses == null) {
-            courses = new ArrayList<>();
-        }
 
         Course c = new Course(generateCourseId(), title, description, instructorId);
-        courses.add(c);  
-        db.saveCourses();   
+
+        
+        c.setApprovalStatus(Course.ApprovalStatus.PENDING);
+
+        courses.add(c);
+        db.saveCourses();
         return c;
     }
 
-    
     public boolean editCourse(String id, String newTitle, String newDescription) {
         Course c = getCourse(id);
-        if (c == null) 
+        if (c == null)
             return false;
 
         if (newTitle != null && !newTitle.isEmpty())
@@ -62,31 +60,74 @@ public class CourseManager {
         if (c == null)
             return false;
 
-        courses.remove(c);  
+        courses.remove(c);
         db.saveCourses();
         return true;
     }
 
     public Course getCourse(String id) {
         for (Course c : db.getCourses()) {
-            if (c.getCourseId().equals(id)) 
+            if (c.getCourseId().equals(id))
                 return c;
         }
         return null;
     }
 
     public ArrayList<Course> getAllCourses() {
-        return db.getCourses();  
+        return db.getCourses();
+    }
+
+    public boolean approveCourse(String courseId) {
+        Course c = getCourse(courseId);
+        if (c == null)
+            return false;
+
+        c.setApprovalStatus(Course.ApprovalStatus.APPROVED);
+        db.saveCourses();
+        return true;
+    }
+
+    public boolean rejectCourse(String courseId) {
+        Course c = getCourse(courseId);
+        if (c == null)
+            return false;
+
+        c.setApprovalStatus(Course.ApprovalStatus.REJECTED);
+        db.saveCourses();
+        return true;
+    }
+
+    public ArrayList<Course> getPendingCourses() {
+        ArrayList<Course> pending = new ArrayList<>();
+        for (Course c : db.getCourses()) {
+            if (c.getApprovalStatus() == Course.ApprovalStatus.PENDING)
+                pending.add(c);
+        }
+        return pending;
+    }
+
+    public ArrayList<Course> getApprovedCourses() {
+        ArrayList<Course> approved = new ArrayList<>();
+        for (Course c : db.getCourses()) {
+            if (c.getApprovalStatus() == Course.ApprovalStatus.APPROVED)
+                approved.add(c);
+        }
+        return approved;
     }
 
     public boolean enrollStudent(String courseId, String studentId) {
         Course c = getCourse(courseId);
-        if (c == null) return false;
+        if (c == null)
+            return false;
 
-        if (c.getStudents().contains(studentId)) return false; 
+        if (c.getApprovalStatus() != Course.ApprovalStatus.APPROVED)
+            return false;
+
+        if (c.getStudents().contains(studentId))
+            return false;
+
         c.getStudents().add(studentId);
         db.saveCourses();
         return true;
     }
 }
-
