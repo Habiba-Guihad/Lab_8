@@ -185,7 +185,8 @@ public void loadQuestion(){
         int score=quiz.calculateScore(userAnswers);
         QuizManager manager=new QuizManager();
         manager.saveAttempt(studentId, courseId, quiz, score);
-        JOptionPane.showMessageDialog(this, "Your Score: " + score + "%"); 
+        new QuizResultFrame(quiz, score).setVisible(true);
+        new QuizReviewFrame(quiz, userAnswers).setVisible(true); 
         this.dispose();
     }//GEN-LAST:event_btnSubmitActionPerformed
     private int getSelectedChoice(){
