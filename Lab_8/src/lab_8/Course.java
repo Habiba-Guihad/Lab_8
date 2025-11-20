@@ -11,13 +11,15 @@ package lab_8;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Course {
 
-    private String courseId;      
+    public enum ApprovalStatus { PENDING, APPROVED, REJECTED }
+
+    private String courseId;
     private String title;
     private String description;
     private String instructorId;
+    private ApprovalStatus approvalStatus = ApprovalStatus.PENDING;
 
     private List<Lesson> lessons = new ArrayList<>();
     private List<String> students = new ArrayList<>();
@@ -27,26 +29,48 @@ public class Course {
         this.title = title;
         this.description = description;
         this.instructorId = instructorId;
+        this.approvalStatus = ApprovalStatus.PENDING;
     }
 
-    public String getCourseId() { 
-      return courseId; }
+    public String getCourseId() {
+        return courseId;
+    }
+
     public String getTitle() {
-      return title; }
-    public String getDescription() { 
-      return description; }
-    public String getInstructorId() { 
-      return instructorId; }
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getInstructorId() {
+        return instructorId;
+    }
+
+    public ApprovalStatus getApprovalStatus() {
+        return approvalStatus;
+    }
+
+    public void setApprovalStatus(ApprovalStatus status) {
+        this.approvalStatus = status;
+    }
 
     public void setTitle(String title) {
-      this.title = title; }
-    public void setDescription(String description) {
-      this.description = description; }
+        this.title = title;
+    }
 
-    public List<Lesson> getLessons() { 
-      return lessons; }
-    public List<String> getStudents() { 
-      return students; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public List<String> getStudents() {
+        return students;
+    }
 
     public void addLesson(Lesson lesson) {
         lessons.add(lesson);
@@ -58,6 +82,8 @@ public class Course {
 
     @Override
     public String toString() {
-        return courseId + " | " + title + " | " + description;
+        return courseId + " | " + title + " | " + description + " | Status: " + approvalStatus;
     }
 }
+
+
