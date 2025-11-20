@@ -8,16 +8,19 @@ package lab_8;
  * @author Dell
  */
 public enum Role {
-    STUDENT,INSTRUCTOR;
-    public static Role fromString(String role) {
-        if(role==null)
+    STUDENT,INSTRUCTOR,ADMIN;
+public static Role fromString(String role) {
+        if (role == null)
             return null;
-        switch(role.toLowerCase()){
+
+        switch (role.toLowerCase()) {
             case "student":
                 return STUDENT;
-            case "instructor": 
+            case "instructor":
                 return INSTRUCTOR;
-            default: 
+            case "admin":
+                return ADMIN;
+            default:
                 return null;
         }
     }
