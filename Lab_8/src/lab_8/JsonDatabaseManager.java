@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.io.*;
 import java.util.*;
 
+ 
 public class JsonDatabaseManager {
 
     private static final String USERS_FILE = "users.json";
@@ -26,8 +27,8 @@ public class JsonDatabaseManager {
         loadUsers();
         loadCourses();
     }
+    
     // read json files w bet return as a string 
-
     private String readFile(String filename) {
         try {
             File f = new File(filename);
@@ -51,8 +52,7 @@ public class JsonDatabaseManager {
             return "[]";
         }
     }
-    //write string to json 
-
+     //write string to json 
     private void writeFile(String filename, String data) {
         try {
             FileWriter fw = new FileWriter(filename);
@@ -99,29 +99,28 @@ public class JsonDatabaseManager {
 
                     progress.put(Integer.parseInt(courseId), lessons);
                 }
+
                 ArrayList<Certificate> certificates = new ArrayList<>();
                 JSONArray certArr = obj.optJSONArray("certificates");
 
-               if (certArr != null) {
-                for (int k = 0; k < certArr.length(); k++) {
-                     JSONObject co = certArr.getJSONObject(k);
+                if (certArr != null) {
+                    for (int k = 0; k < certArr.length(); k++) {
+                        JSONObject co = certArr.getJSONObject(k);
 
-                     Certificate c = new Certificate(
-                co.getString("certificateId"),
-                userId,
-                co.getInt("courseId"),
-                co.getString("dateIssued"),
-                co.optString("filePath", "")
-                             
-                             
-        );
-        certificates.add(c);
-    }
-}
-               
+                        Certificate c = new Certificate(
+                                co.getString("certificateId"),
+                                userId,
+                                co.getInt("courseId"),
+                                co.getString("dateIssued"),
+                                co.optString("filePath", "")
+                        );
+                        certificates.add(c);
+                    }
+                }
 
                 users.add(new Student(userId, username, email, passwordHash, enrolled, progress, certificates));
-            } else if (role.equals("instructor")) {
+            } 
+            else if (role.equals("instructor")) {
 
                 ArrayList<String> created = new ArrayList<>();
                 JSONArray createdArr = obj.getJSONArray("createdCourses");
@@ -129,7 +128,11 @@ public class JsonDatabaseManager {
                     created.add(createdArr.getString(j));
                 }
 
-                users.add(new Instructor(userId, username, email, passwordHash,created)); // bla bla
+                users.add(new Instructor(userId, username, email, passwordHash, created));
+            }
+            
+            else if (role.equals("admin")) {
+                users.add(new Admin(userId, username, email, passwordHash));
             }
         }
     }
@@ -156,14 +159,15 @@ public class JsonDatabaseManager {
                             new JSONArray(s.getProgress().get(courseId)));
                 }
                 obj.put("progress", progObj);
+
                 JSONArray certArr = new JSONArray();
-             for (Certificate c : s.getCertificates()) {
-                JSONObject co = new JSONObject();
-                 co.put("certificateId", c.getCertificateId());
-                 co.put("courseId", c.getCourseId());
-                 co.put("dateIssued", c.getDateIssued());
-                 co.put("filePath", c.getFilePath());
-                 certArr.put(co);
+                for (Certificate c : s.getCertificates()) {
+                    JSONObject co = new JSONObject();
+                    co.put("certificateId", c.getCertificateId());
+                    co.put("courseId", c.getCourseId());
+                    co.put("dateIssued", c.getDateIssued());
+                    co.put("filePath", c.getFilePath());
+                    certArr.put(co);
                 }
                 obj.put("certificates", certArr);
             }
@@ -176,11 +180,6 @@ public class JsonDatabaseManager {
         }
 
         writeFile(USERS_FILE, arr.toString(4));
-    }
-
-    public void saveUser(User u) {
-        users.add(u);
-        saveUsers();
     }
 
     private void loadCourses() {
@@ -198,6 +197,12 @@ public class JsonDatabaseManager {
             String instructorId = o.getString("instructorId");
 
             Course c = new Course(courseId, title, description, instructorId);
+
+            if (o.has("approvalStatus")) {
+                c.setApprovalStatus(
+                        Course.ApprovalStatus.valueOf(o.getString("approvalStatus"))
+                );
+            }
 
             JSONArray studentsArr = o.getJSONArray("students");
             for (int s = 0; s < studentsArr.length(); s++) {
@@ -232,6 +237,8 @@ public class JsonDatabaseManager {
             o.put("title", c.getTitle());
             o.put("description", c.getDescription());
             o.put("instructorId", c.getInstructorId());
+
+            o.put("approvalStatus", c.getApprovalStatus().toString());
 
             o.put("students", new JSONArray(c.getStudents()));
 
@@ -284,12 +291,11 @@ public class JsonDatabaseManager {
         for (Course c : courses) {
             try {
                 int id = Integer.parseInt(c.getCourseId().replaceAll("\\D", ""));
-                if(id> max)
-                    max= id;
-            } catch(Exception e) {} 
-}
-return max +1;
-            
+                if (id > max)
+                    max = id;
+            } catch (Exception e) {}
+        }
+        return max + 1;
     }
 
     public void addUser(User u) {
@@ -310,5 +316,5 @@ return max +1;
         }
         return null;
     }
-
 }
+
