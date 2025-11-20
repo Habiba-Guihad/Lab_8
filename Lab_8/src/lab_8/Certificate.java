@@ -15,12 +15,14 @@ public class Certificate implements Serializable {
     private String certificateId;
     private int courseId;
     private String dateIssued;
+    private String filePath;
     
-    public Certificate(String studentId, String certificateId, int courseId, String dateIssued) {
+    public Certificate(String studentId, String certificateId, int courseId, String dateIssued, String filePath) {
         this.certificateId =  certificateId;
         this.studentId = studentId;
         this.courseId = courseId;
         this.dateIssued = dateIssued;
+        this.filePath = filePath;
     }
     
     public String getStudentId() 
@@ -41,5 +43,10 @@ public class Certificate implements Serializable {
     public String getDateIssued()
     {
         return dateIssued;
+    }
+    
+    public String getFilePath()
+    {
+        return filePath;
     }
 }
