@@ -17,15 +17,22 @@ public class TakeQuizFrame extends javax.swing.JFrame {
      */
     private Quiz quiz;
     private int currentIndex=0;
-    private List<Integer>userAnswers=new ArrayList<>();
-    public TakeQuizFrame(Quiz quiz) {
+    private List<Integer> userAnswers=new ArrayList<>();
+    private String studentId;
+    private String courseId;
+    public TakeQuizFrame(String studentId,String courseId,Quiz quiz) {
         initComponents();
         this.quiz=quiz;
         jLabel1.setText(quiz.getTitle());
         btnSubmit.setVisible(false);
         loadQuestion();
     }
+    public TakeQuizFrame() {
+    initComponents();
+}
 public void loadQuestion(){
+    btnNext.setVisible(true);
+    btnSubmit.setVisible(false);
     Question q=quiz.getQuestions().get(currentIndex);
     jLabel2.setText((currentIndex+1) + "." + q.getQuestionText());
     jRadioButton1.setText(q.getOptions().get(0));
@@ -176,9 +183,8 @@ public void loadQuestion(){
         }
         userAnswers.add(selected);
         int score=quiz.calculateScore(userAnswers);
-        QuizAttempt attempt=new QuizAttempt(quiz,score);
         QuizManager manager=new QuizManager();
-        manager.addAttempt(attempt);
+        manager.saveAttempt(studentId, courseId, quiz, score);
         JOptionPane.showMessageDialog(this, "Your Score: " + score + "%"); 
         this.dispose();
     }//GEN-LAST:event_btnSubmitActionPerformed
@@ -222,6 +228,7 @@ public void loadQuestion(){
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new TakeQuizFrame().setVisible(true);
             }
