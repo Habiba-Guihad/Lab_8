@@ -26,7 +26,10 @@ public class QuizAttempt {
         this.quiz=quiz;
         this.attemptTime = LocalDateTime.now();
     }
-    
+     public QuizAttempt(Quiz quiz, int score) {
+        this.quiz = quiz;
+        this.score = score;
+    }
 
     public String getStudentId() {
         return studentId;
