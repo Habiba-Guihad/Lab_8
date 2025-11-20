@@ -73,7 +73,8 @@ public void awardCertificate(int courseId)
 {
     String certId = java.util.UUID.randomUUID().toString();
     String date = java.time.LocalDate.now().toString();
-    certificates.add(new Certificate(certId, this.getUserId(), courseId, date));
+     String filePath = "certificates/" + getUserId() + "_C" + courseId + ".pdf";
+    certificates.add(new Certificate(certId, this.getUserId(), courseId, date, filePath));
 }
 
 public boolean hasCompletedCourse(Course course) 
