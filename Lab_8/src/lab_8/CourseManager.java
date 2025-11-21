@@ -19,6 +19,10 @@ public class CourseManager {
     public CourseManager(JsonDatabaseManager db) {
         this.db = db;
     }
+    
+    public JsonDatabaseManager getDbManager() {
+        return db;
+    }
 
     private String generateCourseId() {
         ArrayList<Course> courses = db.getCourses();
