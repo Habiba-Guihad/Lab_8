@@ -32,7 +32,7 @@ public class Instructor extends User {
         Course c = manager.addCourse(title, description, this.getUserId());
         if (c != null) {
             createdCourses.add(c.getCourseId());
-            manager.getDbManager.saveUsers(); // save instructor's updated createdCourses
+            manager.getDbManager().saveUsers(); // save instructor's updated createdCourses
             return c.getCourseId();
         }
         return null;
