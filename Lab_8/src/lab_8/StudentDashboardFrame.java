@@ -395,8 +395,10 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
     {
     int cId = Integer.parseInt(selectedCourse.getCourseId().replaceAll("\\D", ""));
     student.awardCertificate(cId);
+    Certificate cert = student.getCertificates().get(student.getCertificates().size() - 1);
+    db.generateCertificatePDF(student, selectedCourse, cert);
     db.saveUsers();
-
+   
     JOptionPane.showMessageDialog(this,
         " Congratulations! You completed this course, A certificate has been issued.");
     }

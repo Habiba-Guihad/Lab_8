@@ -33,6 +33,8 @@ public class CertificateFrame extends javax.swing.JFrame {
 
     loadCertificates();
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -47,8 +49,8 @@ public class CertificateFrame extends javax.swing.JFrame {
         scrollCertificates = new javax.swing.JScrollPane();
         listCertificates = new javax.swing.JList<>();
         btnBack = new javax.swing.JButton();
-        btnDownloadJson = new javax.swing.JButton();
         btnDownloadPdf = new javax.swing.JButton();
+        btnViewPdf = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,17 +71,17 @@ public class CertificateFrame extends javax.swing.JFrame {
             }
         });
 
-        btnDownloadJson.setText("Download JSON");
-        btnDownloadJson.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDownloadJsonActionPerformed(evt);
-            }
-        });
-
         btnDownloadPdf.setText("Download PDF");
         btnDownloadPdf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDownloadPdfActionPerformed(evt);
+            }
+        });
+
+        btnViewPdf.setText("View PDF");
+        btnViewPdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewPdfActionPerformed(evt);
             }
         });
 
@@ -96,13 +98,14 @@ public class CertificateFrame extends javax.swing.JFrame {
                         .addGap(115, 115, 115)
                         .addComponent(scrollCertificates, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(btnBack)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDownloadJson)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDownloadPdf)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                        .addGap(56, 56, 56)
+                        .addComponent(btnDownloadPdf)
+                        .addGap(36, 36, 36)
+                        .addComponent(btnViewPdf))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(141, 141, 141)
+                        .addComponent(btnBack)))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,12 +114,13 @@ public class CertificateFrame extends javax.swing.JFrame {
                 .addComponent(lblTitle)
                 .addGap(33, 33, 33)
                 .addComponent(scrollCertificates, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBack)
-                    .addComponent(btnDownloadJson)
-                    .addComponent(btnDownloadPdf))
-                .addContainerGap(57, Short.MAX_VALUE))
+                    .addComponent(btnDownloadPdf)
+                    .addComponent(btnViewPdf))
+                .addGap(18, 18, 18)
+                .addComponent(btnBack)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -147,35 +151,6 @@ private void loadCertificates()
     }
     listCertificates.setModel(model);
 }
-    private void btnDownloadJsonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownloadJsonActionPerformed
-      int index = listCertificates.getSelectedIndex();
-    if (index < 0) {
-        JOptionPane.showMessageDialog(this, "Select a certificate first.");
-        return;
-    }
-
-    Certificate cert = student.getCertificates().get(index);
-
-    JSONObject obj = new JSONObject();
-    obj.put("certificateId", cert.getCertificateId());
-    obj.put("studentId", cert.getStudentId());
-    obj.put("courseId", cert.getCourseId());
-    obj.put("dateIssued", cert.getDateIssued());
-    obj.put("filePath", cert.getFilePath());
-
-    JFileChooser chooser = new JFileChooser();
-    chooser.setSelectedFile(new File("certificate_" + cert.getCertificateId() + ".json"));
-
-    if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-        try (FileWriter fw = new FileWriter(chooser.getSelectedFile())) {
-            fw.write(obj.toString(4));
-            JOptionPane.showMessageDialog(this, "JSON saved successfully!");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error saving file.");
-        }
-    }
-    }//GEN-LAST:event_btnDownloadJsonActionPerformed
-
     private void btnDownloadPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownloadPdfActionPerformed
      int index = listCertificates.getSelectedIndex();
     if (index < 0) {
@@ -202,6 +177,29 @@ private void loadCertificates()
         this.dispose();
         parentFrame.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnViewPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewPdfActionPerformed
+        int index = listCertificates.getSelectedIndex();
+    if (index < 0) {
+        JOptionPane.showMessageDialog(this, "Please select a certificate.");
+        return;
+    }
+
+     Certificate cert = student.getCertificates().get(index);
+    File file = new File(cert.getFilePath());
+
+    if (!file.exists()) {
+        JOptionPane.showMessageDialog(this, "Certificate file not found.");
+        return;
+    }
+
+    try {
+        // Opens using default PDF viewer on Windows/Mac/Linux
+        java.awt.Desktop.getDesktop().open(file);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Could not open certificate: " + e.getMessage());
+    }
+    }//GEN-LAST:event_btnViewPdfActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,8 +238,8 @@ private void loadCertificates()
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnDownloadJson;
     private javax.swing.JButton btnDownloadPdf;
+    private javax.swing.JButton btnViewPdf;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JList<String> listCertificates;
     private javax.swing.JScrollPane scrollCertificates;
