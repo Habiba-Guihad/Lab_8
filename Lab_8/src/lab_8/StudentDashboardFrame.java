@@ -150,6 +150,7 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
         btnCertificates = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
+        btnTakeQuiz = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -233,6 +234,13 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
             }
         });
 
+        btnTakeQuiz.setText("Take Quiz");
+        btnTakeQuiz.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTakeQuizActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -249,16 +257,22 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnBack))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnEnroll)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                                .addComponent(btnRefresh)))
+                                .addGap(38, 38, 38)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnBack))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnEnroll)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                                        .addComponent(btnRefresh))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnTakeQuiz)
+                                .addGap(77, 77, 77)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
@@ -312,13 +326,16 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnMark)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCertificates))
+                        .addComponent(btnCertificates)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
-                            .addComponent(btnBack))))
-                .addContainerGap(16, Short.MAX_VALUE))
+                            .addComponent(btnBack))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTakeQuiz)))
+                .addContainerGap())
         );
 
         pack();
@@ -398,7 +415,7 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
     Certificate cert = student.getCertificates().get(student.getCertificates().size() - 1);
     db.generateCertificatePDF(student, selectedCourse, cert);
     db.saveUsers();
-   
+    selectedLesson.setCompleted(true);
     JOptionPane.showMessageDialog(this,
         " Congratulations! You completed this course, A certificate has been issued.");
     }
@@ -428,6 +445,34 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
          this.dispose();
          new LoginFrame().setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnTakeQuizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTakeQuizActionPerformed
+        // TODO add your handling code here:
+       int lessonIndex=listLessons.getSelectedIndex();
+       int courseIndex=listEnrolled.getSelectedIndex();
+       if(lessonIndex<0 || courseIndex<0 ){
+           JOptionPane.showMessageDialog(this,"Please select lesson first");
+           return;
+       }
+       List<Course>enrolledCourses=(List<Course>) listEnrolled.getClientProperty("courses");
+       Course selectedCourse = enrolledCourses.get(courseIndex);
+       List<Lesson>lessons=(List<Lesson>) listLessons.getClientProperty("lessons");
+       Lesson selectedLesson = lessons.get(lessonIndex);
+       if (!selectedLesson.isCompleted()) {
+        JOptionPane.showMessageDialog(this,"You must complete this lesson before taking the quiz.");
+        return;
+    }
+       Quiz quiz=selectedLesson.getQuiz();
+       if(quiz==null){
+           JOptionPane.showMessageDialog(this,"This lesson has no quiz");
+           return;
+       }
+       String studentId=student.getUserId();
+       String courseId=selectedCourse.getCourseId();
+       TakeQuizFrame qf=new TakeQuizFrame(studentId,courseId,quiz);
+       qf.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_btnTakeQuizActionPerformed
  
      private void listEnrolledValueChanged(javax.swing.event.ListSelectionEvent evt) {
         int index = listEnrolled.getSelectedIndex();
@@ -494,6 +539,7 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnEnroll;
     private javax.swing.JButton btnMark;
     private javax.swing.JButton btnRefresh;
+    private javax.swing.JButton btnTakeQuiz;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

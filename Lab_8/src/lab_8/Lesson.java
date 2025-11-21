@@ -14,7 +14,7 @@ public class Lesson {
     private String title;
     private String content;
     private Quiz quiz;
-
+    private boolean completed;
     public Lesson(String lessonId, String title, String content) {
         this.lessonId = lessonId;
         this.title = title;
@@ -48,6 +48,14 @@ public class Lesson {
 
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
     
     @Override
