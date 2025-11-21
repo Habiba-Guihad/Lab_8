@@ -32,6 +32,8 @@ public class Course {
         this.approvalStatus = ApprovalStatus.PENDING;
     }
 
+    public Course() {}
+
     public String getCourseId() {
         return courseId;
     }
@@ -52,6 +54,14 @@ public class Course {
         return approvalStatus;
     }
 
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public List<String> getStudents() {
+        return students;
+    }
+
     public void setApprovalStatus(ApprovalStatus status) {
         this.approvalStatus = status;
     }
@@ -64,16 +74,18 @@ public class Course {
         this.description = description;
     }
 
-    public List<Lesson> getLessons() {
-        return lessons;
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = (lessons != null) ? lessons : new ArrayList<>();
     }
 
-    public List<String> getStudents() {
-        return students;
+    public void setStudents(List<String> students) {
+        this.students = (students != null) ? students : new ArrayList<>();
     }
 
     public void addLesson(Lesson lesson) {
-        lessons.add(lesson);
+        if (lesson != null) {
+            lessons.add(lesson);
+        }
     }
 
     public boolean deleteLesson(String id) {
@@ -82,8 +94,9 @@ public class Course {
 
     @Override
     public String toString() {
-        return courseId + " | " + title + " | " + description + " | Status: " + approvalStatus;
+        return courseId + " | " + title + " | " + description + "  Status: " + approvalStatus;
     }
 }
+
 
 
