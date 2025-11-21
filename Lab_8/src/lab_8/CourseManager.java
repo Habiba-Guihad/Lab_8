@@ -9,6 +9,8 @@ package lab_8;
  * @author New Eng
  */
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CourseManager {
 
@@ -30,8 +32,6 @@ public class CourseManager {
         ArrayList<Course> courses = db.getCourses();
 
         Course c = new Course(generateCourseId(), title, description, instructorId);
-
-        
         c.setApprovalStatus(Course.ApprovalStatus.PENDING);
 
         courses.add(c);
@@ -44,10 +44,10 @@ public class CourseManager {
         if (c == null)
             return false;
 
-        if (newTitle != null && !newTitle.isEmpty())
+        if (newTitle != null && !newTitle.trim().isEmpty())
             c.setTitle(newTitle);
 
-        if (newDescription != null && !newDescription.isEmpty())
+        if (newDescription != null && !newDescription.trim().isEmpty())
             c.setDescription(newDescription);
 
         db.saveCourses();
@@ -68,13 +68,19 @@ public class CourseManager {
     public Course getCourse(String id) {
         for (Course c : db.getCourses()) {
             if (c.getCourseId().equals(id))
-                return c;
+                return c;  
         }
         return null;
     }
 
     public ArrayList<Course> getAllCourses() {
         return db.getCourses();
+    }
+
+    public List<Course> getCoursesByInstructor(String instructorId) {
+        return db.getCourses().stream()
+                .filter(c -> c.getInstructorId().equals(instructorId))
+                .collect(Collectors.toList());
     }
 
     public boolean approveCourse(String courseId) {
