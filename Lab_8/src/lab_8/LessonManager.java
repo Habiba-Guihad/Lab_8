@@ -57,7 +57,17 @@ public List<Lesson> getAllLessons(Course course) {
     if (course == null) return List.of();
     return course.getLessons();
 }
+public boolean createLesson(Course course, Instructor instructor,
+                            String lessonId, String title, String content) {//**
 
+    Lesson lesson = new Lesson(lessonId, title, content);
+    course.getLessons().add(lesson);
+
+    // 🔥 الحل الحقيقي للمشكلة
+   // instructor.CreatedLesson(lessonId);
+
+    return true;
+}//**
 // --- Quiz methods ---
 public boolean addQuizToLesson(Course course, String lessonId, String quizTitle, int passingScore, List<Question> questions) {
     Lesson lesson = getLesson(course, lessonId);
