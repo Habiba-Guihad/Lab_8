@@ -5,7 +5,9 @@
 package lab_8;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class Instructor extends User {
@@ -112,16 +114,21 @@ public boolean addQuiz(LessonManager lessonManager, CourseManager courseManager,
 
     Course course = courseManager.getCourse(courseId);
     if (course == null || !course.getInstructorId().equals(this.getUserId())) return false;
-    if (!createdLessons.contains(lessonId)) return false;
 
-    boolean added = lessonManager.addQuizToLesson(course, lessonId, quizTitle, passingScore, questions);
-    if (added) courseManager.getDbManager().saveCourses();
-    return added;
+    Lesson lesson = lessonManager.getLesson(course, lessonId);
+    if (lesson == null) return false;
+
+    Quiz quiz = new Quiz(quizTitle, lesson.getLessonId(), passingScore, questions);
+    lesson.setQuiz(quiz);
+
+    if (!createdLessons.contains(lessonId)) createdLessons.add(lessonId);
+
+    courseManager.getDbManager().saveCourses();
+    return true;
 }
 
 public Quiz getQuiz(LessonManager lessonManager, CourseManager courseManager,
                     String courseId, String lessonId) {
-
     Course course = courseManager.getCourse(courseId);
     if (course == null || !course.getInstructorId().equals(this.getUserId())) return null;
     if (!createdLessons.contains(lessonId)) return null;
@@ -130,41 +137,120 @@ public Quiz getQuiz(LessonManager lessonManager, CourseManager courseManager,
 }
 
 public boolean addQuestionToQuiz(CourseManager courseManager,
-LessonManager lessonManager,
-String courseId,
-String lessonId,
-String quizTitle,
-Question question) {
-// 1. Find the course
-Course course = courseManager.getCourse(courseId);
-if (course == null || !course.getInstructorId().equals(this.getUserId())) {
-return false;
+                                 LessonManager lessonManager,
+                                 String courseId,
+                                 String lessonId,
+                                 String quizTitle,
+                                 Question question) {
+
+    Course course = courseManager.getCourse(courseId);
+    if (course == null || !course.getInstructorId().equals(this.getUserId())) return false;
+
+    Lesson lesson = lessonManager.getLesson(course, lessonId);
+    if (lesson == null) return false;
+
+    Quiz quiz = lesson.getQuiz();
+    if (quiz == null || !quiz.getTitle().equals(quizTitle)) return false;
+
+    quiz.getQuestions().add(question);
+    courseManager.getDbManager().saveCourses();
+    return true;
 }
 
+// ---------- Analytics Helpers ----------
 
-// 2. Find the lesson
-Lesson lesson = lessonManager.getLesson(course, lessonId);
-if (lesson == null) {
-    return false;
+// Calculate average scores for each quiz in a course
+public Map<String, Double> calculateQuizAverages(Course course, List<Student> students) {
+    Map<String, List<Integer>> scoresMap = new HashMap<>();
+    for (Lesson lesson : course.getLessons()) {
+        Quiz quiz = lesson.getQuiz();
+        if (quiz != null) {
+            scoresMap.put(quiz.getTitle(), new ArrayList<>());
+        }
+    }
+
+    for (Student s : students) {
+        int courseId = Integer.parseInt(course.getCourseId().replaceAll("\\D", ""));
+        if (!s.getEnrolledCourses().contains(courseId)) continue;
+
+        for (Lesson lesson : course.getLessons()) {
+            Quiz quiz = lesson.getQuiz();
+            if (quiz != null) {
+                Integer score = s.getQuizScore(courseId, quiz.getTitle());
+                if (score != null) scoresMap.get(quiz.getTitle()).add(score);
+            }
+        }
+    }
+
+    Map<String, Double> averages = new HashMap<>();
+    for (String quizTitle : scoresMap.keySet()) {
+        List<Integer> scores = scoresMap.get(quizTitle);
+        double avg = scores.isEmpty() ? 0 : scores.stream().mapToInt(Integer::intValue).average().orElse(0);
+        averages.put(quizTitle, avg);
+    }
+
+    return averages;
 }
 
-// 3. Get the quiz from the lesson
-Quiz quiz = lesson.getQuiz();
-if (quiz == null || !quiz.getTitle().equals(quizTitle)) {
-    return false;
+// Calculate lesson completion percentages
+public Map<String, Double> calculateLessonCompletion(Course course, List<Student> students) {
+    Map<String, Double> completionMap = new HashMap<>();
+    int courseId = Integer.parseInt(course.getCourseId().replaceAll("\\D", ""));
+
+    for (Lesson lesson : course.getLessons()) {
+        int completedCount = 0;
+        for (Student s : students) {
+            if (s.getEnrolledCourses().contains(courseId) && s.isLessonCompleted(courseId, lesson.getLessonId())) {
+                completedCount++;
+            }
+        }
+        double percentage = students.isEmpty() ? 0 : (completedCount * 100.0 / students.size());
+        completionMap.put(lesson.getTitle(), percentage);
+    }
+
+    return completionMap;
 }
 
-// 4. Add the question
-quiz.getQuestions().add(question);
+// -------- New Methods for Course-Wide Analytics --------
 
-// 5. Save changes
-courseManager.getDbManager().saveCourses();
+// Calculate overall course completion
+// Calculate average for a single lesson quiz
+public double calculateQuizAveragesForLesson(Course course, Lesson lesson, List<Student> students) {
+    Quiz quiz = lesson.getQuiz();
+    if (quiz == null) return 0;
 
-return true;
+    int courseId = Integer.parseInt(course.getCourseId().replaceAll("\\D", ""));
+    List<Integer> scores = new ArrayList<>();
 
+    for (Student s : students) {
+        if (!s.getEnrolledCourses().contains(courseId)) continue;
+
+        Integer score = s.getQuizScore(courseId, quiz.getTitle());
+        if (score != null) scores.add(score);
+    }
+
+    return scores.isEmpty() ? 0 : scores.stream().mapToInt(Integer::intValue).average().orElse(0);
 }
 
+public double calculateCourseCompletion(Course course, List<Student> students) {
+int totalLessons = course.getLessons().size();
+if (totalLessons == 0 || students.isEmpty()) return 0.0;
 
+int courseId = Integer.parseInt(course.getCourseId().replaceAll("\\D", ""));
+double totalCompletion = 0.0;
 
+for (Student s : students) {
+    int completedLessons = 0;
+    for (Lesson lesson : course.getLessons()) {
+        if (s.isLessonCompleted(courseId, lesson.getLessonId())) {
+            completedLessons++;
+        }
+    }
+    totalCompletion += (completedLessons * 100.0 / totalLessons);
+}
+
+return totalCompletion / students.size();
+
+}
 
 }

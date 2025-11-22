@@ -274,6 +274,15 @@ public User findUserByEmail(String email) {
     for (User u : users) if (u.getEmail().equalsIgnoreCase(email)) return u;
     return null;
 }
+public Student getStudentById(String userId) {
+for (User u : users) {
+if (u.getUserId().equals(userId) && u instanceof Student s) {
+return s;
+}
+}
+return null;
+}
+
 
 // --- generateCertificatePDF remains exactly as before ---
 public void generateCertificatePDF(Student student, Course course, Certificate cert) {

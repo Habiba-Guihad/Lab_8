@@ -80,40 +80,53 @@ private String getSelectedLessonId() {
 }
 
 private void createQuizManually() {
+String courseId = getSelectedCourseId();
+String lessonId = getSelectedLessonId();
+String quizTitle = quizTitleField.getText().trim();
+
+System.out.println("DEBUG: Selected courseId = " + courseId);
+System.out.println("DEBUG: Selected lessonId = " + lessonId);
+System.out.println("DEBUG: Entered quizTitle = '" + quizTitle + "'");
+
+if (courseId == null || lessonId == null || quizTitle.isEmpty()) {
+    javax.swing.JOptionPane.showMessageDialog(this, 
+        "Select course, lesson, and enter quiz title.");
+    System.out.println("DEBUG: One or more fields are empty or null.");
+    return;
+}
+
+boolean created = instructor.addQuiz(
+    lessonManager,
+    courseManager,
+    courseId,
+    lessonId,
+    quizTitle,
+    0,
+    new java.util.ArrayList<>()
+);
+
+if (created) {
+    javax.swing.JOptionPane.showMessageDialog(this, 
+        "Quiz created! Now you can add questions.");
+    System.out.println("DEBUG: Quiz successfully created for lesson " + lessonId);
+    // TODO: Open questions frame for adding questions
+} else {
+    javax.swing.JOptionPane.showMessageDialog(this, 
+        "Failed to create quiz. Check your selections.");
+    System.out.println("DEBUG: Failed to create quiz. Possible reasons: course not found, lesson not found, or instructor mismatch.");
+}
+
+}
+
+private void updateCreateQuizButtonState() {
     String courseId = getSelectedCourseId();
     String lessonId = getSelectedLessonId();
-    String quizTitle = quizTitleField.getText().trim();
+    String title = quizTitleField.getText().trim();
 
-    if (courseId == null || lessonId == null || quizTitle.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            "Select course, lesson, and enter quiz title.");
-        return;
-    }
-
-    boolean created = instructor.addQuiz(lessonManager, courseManager, courseId, lessonId, quizTitle, 0, new java.util.ArrayList<>());
-
-    if (created) {
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            "Quiz created! Now you can add questions.");
-
-        // Open InstructorAddQuestionsFrame
-        InstructorAddQuestionsFrame addQuestionsFrame = new InstructorAddQuestionsFrame(
-            instructor, 
-            courseManager, 
-            lessonManager, 
-            courseId, 
-            lessonId, 
-            quizTitle
-        );
-        addQuestionsFrame.setVisible(true);
-
-        // Optionally, close this frame if you want
-        // this.dispose();
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            "Failed to create quiz. Check your selections.");
-    }
+    boolean enable = courseId != null && lessonId != null && !title.isEmpty();
+    createQuizButton.setEnabled(enable);
 }
+
 
 
 
@@ -261,14 +274,15 @@ private void createQuizManually() {
         }
         lessonComboBox.setEnabled(true);
     }
-    createQuizButton.setEnabled(false); // will enable when lesson selected & title entered
+    updateCreateQuizButtonState();
     }//GEN-LAST:event_courseComboBoxActionPerformed
 
     private void lessonComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lessonComboBoxActionPerformed
   
     String lessonId = getSelectedLessonId(); // helper method
-    String title = quizTitleField.getText().trim();
-    createQuizButton.setEnabled(lessonId != null && !title.isEmpty());
+// No need to enable/disable the button directly here
+updateCreateQuizButtonState();
+
     }//GEN-LAST:event_lessonComboBoxActionPerformed
 
     private void quizTitleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quizTitleFieldActionPerformed
@@ -276,16 +290,8 @@ private void createQuizManually() {
     // Get the typed title
     String quizTitle = quizTitleField.getText().trim();
 
-    // Check if a course and lesson are selected
-    String courseId = getSelectedCourseId();
-    String lessonId = getSelectedLessonId();
-
-    // Enable the Create Quiz button only if all required fields have values
-    if (courseId != null && lessonId != null && !quizTitle.isEmpty()) {
-        createQuizButton.setEnabled(true);
-    } else {
-        createQuizButton.setEnabled(false);
-    }
+   // When the text changes (key released or document listener)
+updateCreateQuizButtonState();
 
     }//GEN-LAST:event_quizTitleFieldActionPerformed
 
