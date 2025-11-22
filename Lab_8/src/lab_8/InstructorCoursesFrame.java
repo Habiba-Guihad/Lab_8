@@ -207,7 +207,7 @@ for (int row = 0; row < rowCount; row++) {
             tableModel.setValueAt(newCourse.getCourseId(), row, 0);
 
             // Save instructor changes to JSON
-            dbManager.saveUser(instructor);
+            dbManager.saveUsers();
 
             added = true;
         }
@@ -290,7 +290,7 @@ Course c = courseManager.getCourse(courseId);
 if (c != null && c.getInstructorId().equals(instructor.getUserId())) {
     courseManager.deleteCourse(courseId); // removes from courses list and saves courses.json
     instructor.getCreatedCourses().remove(courseId);
-    dbManager.saveUser(instructor);       // save updated instructor list
+    dbManager.saveUsers();       // save updated instructor list
     tableModel.removeRow(selectedRow);
     JOptionPane.showMessageDialog(this, "Course deleted successfully!");
 } else {

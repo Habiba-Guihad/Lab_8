@@ -1,0 +1,32 @@
+[
+    {
+        "role": "instructor",
+        "createdCourses": [
+            "C1",
+            "C2"
+        ],
+        "userId": "d383688b-8cc2-40c4-a921-bdaed019cb67",
+        "email": "h@h",
+        "passwordHash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "h"
+    },
+    {
+        "role": "student",
+        "certificates": [],
+        "enrolledCourses": [
+            1,
+            2
+        ],
+        "progress": {
+            "1": [
+                "L1",
+                "L2"
+            ],
+            "2": ["L1"]
+        },
+        "userId": "b3512f75-07d0-4c2a-a95b-b098b1c8be8e",
+        "email": "y@y",
+        "passwordHash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "y"
+    }
+]

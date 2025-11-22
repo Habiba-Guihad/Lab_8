@@ -33,7 +33,9 @@ public class CertificateFrame extends javax.swing.JFrame {
 
     loadCertificates();
     }
-    
+    public CertificateFrame() {
+        initComponents();
+    }
     
 
     /**

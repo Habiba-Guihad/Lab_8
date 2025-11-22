@@ -1,0 +1,47 @@
+[
+    {
+        "approvalStatus": "PENDING",
+        "description": "w",
+        "students": ["b3512f75-07d0-4c2a-a95b-b098b1c8be8e"],
+        "title": "prog",
+        "courseId": "C1",
+        "instructorId": "d383688b-8cc2-40c4-a921-bdaed019cb67",
+        "lessons": [
+            {
+                "lessonId": "L1",
+                "title": "java",
+                "content": "w"
+            },
+            {
+                "lessonId": "L2",
+                "title": "OOP",
+                "content": "q"
+            },
+            {
+                "lessonId": "L3",
+                "title": "SOLID",
+                "content": "w"
+            }
+        ]
+    },
+    {
+        "approvalStatus": "PENDING",
+        "description": "",
+        "students": ["b3512f75-07d0-4c2a-a95b-b098b1c8be8e"],
+        "title": "math",
+        "courseId": "C2",
+        "instructorId": "d383688b-8cc2-40c4-a921-bdaed019cb67",
+        "lessons": [
+            {
+                "lessonId": "L1",
+                "title": "Diff",
+                "content": ""
+            },
+            {
+                "lessonId": "L2",
+                "title": "Int",
+                "content": ""
+            }
+        ]
+    }
+]
