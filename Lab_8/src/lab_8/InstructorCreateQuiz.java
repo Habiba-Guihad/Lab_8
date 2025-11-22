@@ -90,17 +90,32 @@ private void createQuizManually() {
         return;
     }
 
-    boolean created = instructor.addQuiz(lessonManager, courseManager,courseId, lessonId, quizTitle, 0, new java.util.ArrayList<>());
+    boolean created = instructor.addQuiz(lessonManager, courseManager, courseId, lessonId, quizTitle, 0, new java.util.ArrayList<>());
 
     if (created) {
         javax.swing.JOptionPane.showMessageDialog(this, 
             "Quiz created! Now you can add questions.");
-        // TODO: Open questions frame for adding questions
+
+        // Open InstructorAddQuestionsFrame
+        InstructorAddQuestionsFrame addQuestionsFrame = new InstructorAddQuestionsFrame(
+            instructor, 
+            courseManager, 
+            lessonManager, 
+            courseId, 
+            lessonId, 
+            quizTitle
+        );
+        addQuestionsFrame.setVisible(true);
+
+        // Optionally, close this frame if you want
+        // this.dispose();
     } else {
         javax.swing.JOptionPane.showMessageDialog(this, 
             "Failed to create quiz. Check your selections.");
     }
 }
+
+
 
 
 
@@ -130,7 +145,6 @@ private void createQuizManually() {
 
         jLabel2.setText("Select Course:");
 
-        courseComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         courseComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 courseComboBoxActionPerformed(evt);
@@ -139,7 +153,6 @@ private void createQuizManually() {
 
         jLabel3.setText("Select Lesson:");
 
-        lessonComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         lessonComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lessonComboBoxActionPerformed(evt);
@@ -304,10 +317,8 @@ private void createQuizManually() {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new InstructorCreateQuiz().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new InstructorCreateQuiz().setVisible(true);
         });
     }
 

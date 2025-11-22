@@ -8,6 +8,7 @@ package lab_8;
  *
  * @author New Eng
  */
+import java.util.ArrayList;
 import java.util.List;
 
 public class LessonManager {
@@ -60,12 +61,14 @@ public List<Lesson> getAllLessons(Course course) {
 // --- Quiz methods ---
 public boolean addQuizToLesson(Course course, String lessonId, String quizTitle, int passingScore, List<Question> questions) {
     Lesson lesson = getLesson(course, lessonId);
-    if (lesson == null || questions == null || questions.isEmpty())
+    if (lesson == null || quizTitle == null || quizTitle.trim().isEmpty())
         return false;
+
     Quiz quiz = new Quiz(quizTitle, lesson.getLessonId(), passingScore, questions);
     lesson.setQuiz(quiz);
     return true;
 }
+
 
 public Quiz getQuizFromLesson(Course course, String lessonId) {
     Lesson lesson = getLesson(course, lessonId);
