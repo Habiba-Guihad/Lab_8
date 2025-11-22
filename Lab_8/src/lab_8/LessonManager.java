@@ -73,28 +73,4 @@ public Quiz getQuizFromLesson(Course course, String lessonId) {
     return lesson.getQuiz();
 }
 
-// Edit quiz by replacing it with a new object (no setters in Quiz class)
-public boolean editQuiz(Course course, String lessonId, String newTitle, Integer newPassingScore, List<Question> newQuestions) {
-    Lesson lesson = getLesson(course, lessonId);
-    if (lesson == null || lesson.getQuiz() == null) return false;
-
-    Quiz oldQuiz = lesson.getQuiz();
-
-    String title = (newTitle != null && !newTitle.isEmpty()) ? newTitle : oldQuiz.getTitle();
-    int passing = (newPassingScore != null) ? newPassingScore : oldQuiz.getPassingScore();
-    List<Question> questions = (newQuestions != null && !newQuestions.isEmpty()) ? newQuestions : oldQuiz.getQuestions();
-
-    Quiz newQuiz = new Quiz(title, lesson.getLessonId(), passing, questions);
-    lesson.setQuiz(newQuiz);
-
-    return true;
-}
-
-public boolean deleteQuiz(Course course, String lessonId) {
-    Lesson lesson = getLesson(course, lessonId);
-    if (lesson == null || lesson.getQuiz() == null) return false;
-
-    lesson.setQuiz(null);
-    return true;
-}
 }

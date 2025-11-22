@@ -90,13 +90,7 @@ private void createQuizManually() {
         return;
     }
 
-    boolean created = instructor.addQuiz(lessonManager, 
-                                         courseManager, 
-                                         courseId, 
-                                         lessonId, 
-                                         quizTitle, 
-                                         0, 
-                                         new java.util.ArrayList<>());
+    boolean created = instructor.addQuiz(lessonManager, courseManager,courseId, lessonId, quizTitle, 0, new java.util.ArrayList<>());
 
     if (created) {
         javax.swing.JOptionPane.showMessageDialog(this, 
@@ -225,15 +219,7 @@ private void createQuizManually() {
         return;
     }
 
-    boolean created = instructor.addQuiz(
-        lessonManager, 
-        courseManager, 
-        courseId, 
-        lessonId, 
-        quizTitle, 
-        0, 
-        new ArrayList<>()
-    );
+    boolean created = instructor.addQuiz(lessonManager,courseManager,courseId, lessonId, quizTitle, 0, new ArrayList<>());
 
     if (created) {
         JOptionPane.showMessageDialog(this, "Quiz created! Now you can add questions.");

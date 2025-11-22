@@ -129,29 +129,42 @@ public Quiz getQuiz(LessonManager lessonManager, CourseManager courseManager,
     return lessonManager.getQuizFromLesson(course, lessonId);
 }
 
-public boolean editQuiz(LessonManager lessonManager, CourseManager courseManager,
-                        String courseId, String lessonId, String quizTitle,
-                        int passingScore, List<Question> questions) {
-
-    Course course = courseManager.getCourse(courseId);
-    if (course == null || !course.getInstructorId().equals(this.getUserId())) return false;
-    if (!createdLessons.contains(lessonId)) return false;
-
-    boolean edited = lessonManager.editQuiz(course, lessonId, quizTitle, passingScore, questions);
-    if (edited) courseManager.getDbManager().saveCourses();
-    return edited;
+public boolean addQuestionToQuiz(CourseManager courseManager,
+LessonManager lessonManager,
+String courseId,
+String lessonId,
+String quizTitle,
+Question question) {
+// 1. Find the course
+Course course = courseManager.getCourse(courseId);
+if (course == null || !course.getInstructorId().equals(this.getUserId())) {
+return false;
 }
 
-public boolean deleteQuiz(LessonManager lessonManager, CourseManager courseManager,
-                          String courseId, String lessonId) {
 
-    Course course = courseManager.getCourse(courseId);
-    if (course == null || !course.getInstructorId().equals(this.getUserId())) return false;
-    if (!createdLessons.contains(lessonId)) return false;
-
-    boolean deleted = lessonManager.deleteQuiz(course, lessonId);
-    if (deleted) courseManager.getDbManager().saveCourses();
-    return deleted;
+// 2. Find the lesson
+Lesson lesson = lessonManager.getLesson(course, lessonId);
+if (lesson == null) {
+    return false;
 }
+
+// 3. Get the quiz from the lesson
+Quiz quiz = lesson.getQuiz();
+if (quiz == null || !quiz.getTitle().equals(quizTitle)) {
+    return false;
+}
+
+// 4. Add the question
+quiz.getQuestions().add(question);
+
+// 5. Save changes
+courseManager.getDbManager().saveCourses();
+
+return true;
+
+}
+
+
+
 
 }
