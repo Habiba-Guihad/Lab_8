@@ -29,7 +29,16 @@ public Instructor(String userId, String username, String email, String passwordH
     this.createdLessons = new ArrayList<>();
 }
 
-// -------------------- Existing course/lesson methods --------------------
+// -------------------- Ownership Helpers --------------------
+private boolean ownsCourse(Course course) {
+    return course != null && course.getInstructorId().equals(this.getUserId());
+}
+
+private boolean ownsLesson(String lessonId) {
+    return createdLessons.contains(lessonId);
+}
+
+// -------------------- Course Methods --------------------
 public String addCourse(CourseManager manager, String title, String description) {
     Course c = manager.addCourse(title, description, this.getUserId());
     if (c != null) {
@@ -42,7 +51,7 @@ public String addCourse(CourseManager manager, String title, String description)
 
 public boolean editCourse(CourseManager manager, String courseId, String newTitle, String newDescription) {
     Course c = manager.getCourse(courseId);
-    if (c == null || !c.getInstructorId().equals(this.getUserId())) return false;
+    if (!ownsCourse(c)) return false;
     boolean edited = manager.editCourse(courseId, newTitle, newDescription);
     if (edited) manager.getDbManager().saveUsers();
     return edited;
@@ -50,7 +59,7 @@ public boolean editCourse(CourseManager manager, String courseId, String newTitl
 
 public boolean deleteCourse(CourseManager manager, String courseId) {
     Course c = manager.getCourse(courseId);
-    if (c == null || !c.getInstructorId().equals(this.getUserId())) return false;
+    if (!ownsCourse(c)) return false;
     boolean deleted = manager.deleteCourse(courseId);
     if (deleted) {
         createdCourses.remove(courseId);
@@ -59,10 +68,11 @@ public boolean deleteCourse(CourseManager manager, String courseId) {
     return deleted;
 }
 
+// -------------------- Lesson Methods --------------------
 public String addLesson(LessonManager manager, CourseManager courseManager,
                         String courseId, String title, String content) {
     Course course = courseManager.getCourse(courseId);
-    if (course == null || !course.getInstructorId().equals(this.getUserId())) return null;
+    if (!ownsCourse(course)) return null;
 
     Lesson lesson = manager.addLesson(course, title, content);
     if (lesson != null) {
@@ -73,12 +83,17 @@ public String addLesson(LessonManager manager, CourseManager courseManager,
     return null;
 }
 
+public void addCreatedLesson(String lessonId) {
+    if (!createdLessons.contains(lessonId)) {
+        createdLessons.add(lessonId);
+    }
+}
+
 public boolean editLesson(LessonManager manager, CourseManager courseManager,
                           String courseId, String lessonId,
                           String newTitle, String newContent) {
     Course course = courseManager.getCourse(courseId);
-    if (course == null || !course.getInstructorId().equals(this.getUserId())) return false;
-    if (!createdLessons.contains(lessonId)) return false;
+    if (!ownsCourse(course) || !ownsLesson(lessonId)) return false;
 
     boolean edited = manager.editLesson(course, lessonId, newTitle, newContent);
     if (edited) courseManager.getDbManager().saveCourses();
@@ -88,7 +103,7 @@ public boolean editLesson(LessonManager manager, CourseManager courseManager,
 public boolean deleteLesson(LessonManager manager, CourseManager courseManager,
                             String courseId, String lessonId) {
     Course course = courseManager.getCourse(courseId);
-    if (course == null || !course.getInstructorId().equals(this.getUserId())) return false;
+    if (!ownsCourse(course)) return false;
 
     boolean deleted = manager.deleteLesson(course, lessonId);
     if (deleted) {
@@ -100,20 +115,20 @@ public boolean deleteLesson(LessonManager manager, CourseManager courseManager,
 
 public List<String> viewEnrolledStudents(CourseManager manager, String courseId) {
     Course c = manager.getCourse(courseId);
-    if (c == null || !c.getInstructorId().equals(this.getUserId())) return null;
+    if (!ownsCourse(c)) return null;
     return new ArrayList<>(c.getStudents());
 }
 
 public ArrayList<String> getCreatedCourses() { return createdCourses; }
 public ArrayList<String> getCreatedLessons() { return createdLessons; }
 
-// -------------------- Quiz methods --------------------
+// -------------------- Quiz Methods --------------------
 public boolean addQuiz(LessonManager lessonManager, CourseManager courseManager,
                        String courseId, String lessonId, String quizTitle,
                        int passingScore, List<Question> questions) {
 
     Course course = courseManager.getCourse(courseId);
-    if (course == null || !course.getInstructorId().equals(this.getUserId())) return false;
+    if (!ownsCourse(course)) return false;
 
     Lesson lesson = lessonManager.getLesson(course, lessonId);
     if (lesson == null) return false;
@@ -121,7 +136,7 @@ public boolean addQuiz(LessonManager lessonManager, CourseManager courseManager,
     Quiz quiz = new Quiz(quizTitle, lesson.getLessonId(), passingScore, questions);
     lesson.setQuiz(quiz);
 
-    if (!createdLessons.contains(lessonId)) createdLessons.add(lessonId);
+    if (!ownsLesson(lessonId)) createdLessons.add(lessonId);
 
     courseManager.getDbManager().saveCourses();
     return true;
@@ -130,8 +145,8 @@ public boolean addQuiz(LessonManager lessonManager, CourseManager courseManager,
 public Quiz getQuiz(LessonManager lessonManager, CourseManager courseManager,
                     String courseId, String lessonId) {
     Course course = courseManager.getCourse(courseId);
-    if (course == null || !course.getInstructorId().equals(this.getUserId())) return null;
-    if (!createdLessons.contains(lessonId)) return null;
+    if (!ownsCourse(course)) return null;
+    if (!ownsLesson(lessonId)) return null;
 
     return lessonManager.getQuizFromLesson(course, lessonId);
 }
@@ -144,7 +159,7 @@ public boolean addQuestionToQuiz(CourseManager courseManager,
                                  Question question) {
 
     Course course = courseManager.getCourse(courseId);
-    if (course == null || !course.getInstructorId().equals(this.getUserId())) return false;
+    if (!ownsCourse(course)) return false;
 
     Lesson lesson = lessonManager.getLesson(course, lessonId);
     if (lesson == null) return false;
@@ -157,9 +172,7 @@ public boolean addQuestionToQuiz(CourseManager courseManager,
     return true;
 }
 
-// ---------- Analytics Helpers ----------
-
-// Calculate average scores for each quiz in a course
+// -------------------- Analytics --------------------
 public Map<String, Double> calculateQuizAverages(Course course, List<Student> students) {
     Map<String, List<Integer>> scoresMap = new HashMap<>();
     for (Lesson lesson : course.getLessons()) {
@@ -169,8 +182,8 @@ public Map<String, Double> calculateQuizAverages(Course course, List<Student> st
         }
     }
 
+    int courseId = parseNumericId(course.getCourseId());
     for (Student s : students) {
-        int courseId = Integer.parseInt(course.getCourseId().replaceAll("\\D", ""));
         if (!s.getEnrolledCourses().contains(courseId)) continue;
 
         for (Lesson lesson : course.getLessons()) {
@@ -192,34 +205,31 @@ public Map<String, Double> calculateQuizAverages(Course course, List<Student> st
     return averages;
 }
 
-// Calculate lesson completion percentages
 public Map<String, Double> calculateLessonCompletion(Course course, List<Student> students) {
     Map<String, Double> completionMap = new HashMap<>();
-    int courseId = Integer.parseInt(course.getCourseId().replaceAll("\\D", ""));
+    int courseId = parseNumericId(course.getCourseId());
 
     for (Lesson lesson : course.getLessons()) {
         int completedCount = 0;
+        int enrolledCount = 0;
         for (Student s : students) {
-            if (s.getEnrolledCourses().contains(courseId) && s.isLessonCompleted(courseId, lesson.getLessonId())) {
-                completedCount++;
+            if (s.getEnrolledCourses().contains(courseId)) {
+                enrolledCount++;
+                if (s.isLessonCompleted(courseId, lesson.getLessonId())) completedCount++;
             }
         }
-        double percentage = students.isEmpty() ? 0 : (completedCount * 100.0 / students.size());
+        double percentage = (enrolledCount == 0) ? 0 : (completedCount * 100.0 / enrolledCount);
         completionMap.put(lesson.getTitle(), percentage);
     }
 
     return completionMap;
 }
 
-// -------- New Methods for Course-Wide Analytics --------
-
-// Calculate overall course completion
-// Calculate average for a single lesson quiz
 public double calculateQuizAveragesForLesson(Course course, Lesson lesson, List<Student> students) {
     Quiz quiz = lesson.getQuiz();
     if (quiz == null) return 0;
 
-    int courseId = Integer.parseInt(course.getCourseId().replaceAll("\\D", ""));
+    int courseId = parseNumericId(course.getCourseId());
     List<Integer> scores = new ArrayList<>();
 
     for (Student s : students) {
@@ -233,24 +243,35 @@ public double calculateQuizAveragesForLesson(Course course, Lesson lesson, List<
 }
 
 public double calculateCourseCompletion(Course course, List<Student> students) {
-int totalLessons = course.getLessons().size();
-if (totalLessons == 0 || students.isEmpty()) return 0.0;
+    int totalLessons = course.getLessons().size();
+    if (totalLessons == 0 || students.isEmpty()) return 0.0;
 
-int courseId = Integer.parseInt(course.getCourseId().replaceAll("\\D", ""));
-double totalCompletion = 0.0;
+    int courseId = parseNumericId(course.getCourseId());
+    double totalCompletion = 0.0;
 
-for (Student s : students) {
-    int completedLessons = 0;
-    for (Lesson lesson : course.getLessons()) {
-        if (s.isLessonCompleted(courseId, lesson.getLessonId())) {
-            completedLessons++;
+    for (Student s : students) {
+        if (!s.getEnrolledCourses().contains(courseId)) continue;
+
+        int completedLessons = 0;
+        for (Lesson lesson : course.getLessons()) {
+            if (s.isLessonCompleted(courseId, lesson.getLessonId())) {
+                completedLessons++;
+            }
         }
+        totalCompletion += (completedLessons * 100.0 / totalLessons);
     }
-    totalCompletion += (completedLessons * 100.0 / totalLessons);
+
+    return totalCompletion / students.size();
 }
 
-return totalCompletion / students.size();
-
+// -------------------- Helper --------------------
+private int parseNumericId(String id) {
+    try {
+        return Integer.parseInt(id.replaceAll("\\D", ""));
+    } catch (NumberFormatException e) {
+        return -1;
+    }
 }
+
 
 }
