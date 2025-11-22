@@ -70,7 +70,11 @@ public String addLesson(LessonManager manager, CourseManager courseManager,
     }
     return null;
 }
-
+public void addCreatedLesson(String lessonId) {//**
+    if (!createdLessons.contains(lessonId)) {
+        createdLessons.add(lessonId);
+    }
+}//**
 public boolean editLesson(LessonManager manager, CourseManager courseManager,
                           String courseId, String lessonId,
                           String newTitle, String newContent) {
@@ -112,11 +116,12 @@ public boolean addQuiz(LessonManager lessonManager, CourseManager courseManager,
 
     Course course = courseManager.getCourse(courseId);
     if (course == null || !course.getInstructorId().equals(this.getUserId())) return false;
-    if (!createdLessons.contains(lessonId)) return false;
+    //if (!createdLessons.contains(lessonId)) return false;
 
     boolean added = lessonManager.addQuizToLesson(course, lessonId, quizTitle, passingScore, questions);
     if (added) courseManager.getDbManager().saveCourses();
     return added;
+    
 }
 
 public Quiz getQuiz(LessonManager lessonManager, CourseManager courseManager,
@@ -124,7 +129,7 @@ public Quiz getQuiz(LessonManager lessonManager, CourseManager courseManager,
 
     Course course = courseManager.getCourse(courseId);
     if (course == null || !course.getInstructorId().equals(this.getUserId())) return null;
-    if (!createdLessons.contains(lessonId)) return null;
+    //if (!createdLessons.contains(lessonId)) return null;
 
     return lessonManager.getQuizFromLesson(course, lessonId);
 }

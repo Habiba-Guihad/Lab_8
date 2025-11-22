@@ -43,5 +43,49 @@
                 "content": ""
             }
         ]
+    },
+    {
+        "approvalStatus": "PENDING",
+        "description": "",
+        "students": ["9433876e-e479-4619-b642-14748be4fa57"],
+        "title": "sports",
+        "courseId": "C3",
+        "instructorId": "5c950f22-5639-41b0-ab54-70da7cdecae1",
+        "lessons": [
+            {
+                "lessonId": "L1",
+                "title": "balls",
+                "content": "handball"
+            },
+            {
+                "quiz": {
+                    "questions": [
+                        {
+                            "options": [
+                                "1",
+                                "2",
+                                "3"
+                            ],
+                            "correctIndex": 1,
+                            "questionText": "t is a"
+                        },
+                        {
+                            "options": [
+                                "4",
+                                "5",
+                                "6"
+                            ],
+                            "correctIndex": 2,
+                            "questionText": "hi"
+                        }
+                    ],
+                    "passingScore": 0,
+                    "title": "t"
+                },
+                "lessonId": "L2",
+                "title": "rackets",
+                "content": "tennis"
+            }
+        ]
     }
 ]

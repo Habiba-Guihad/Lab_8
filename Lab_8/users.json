@@ -28,5 +28,23 @@
         "email": "y@y",
         "passwordHash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
         "username": "y"
+    },
+    {
+        "role": "instructor",
+        "createdCourses": [],
+        "userId": "5c950f22-5639-41b0-ab54-70da7cdecae1",
+        "email": "h@a",
+        "passwordHash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "h"
+    },
+    {
+        "role": "student",
+        "certificates": [],
+        "enrolledCourses": [3],
+        "progress": {"3": ["L2"]},
+        "userId": "9433876e-e479-4619-b642-14748be4fa57",
+        "email": "h@g",
+        "passwordHash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "h"
     }
 ]

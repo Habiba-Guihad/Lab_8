@@ -83,14 +83,27 @@ private void createQuizManually() {
     String courseId = getSelectedCourseId();
     String lessonId = getSelectedLessonId();
     String quizTitle = quizTitleField.getText().trim();
+System.out.println("CourseId = " + courseId);
+    System.out.println("LessonId = " + lessonId);
+    System.out.println("QuizTitle = " + quizTitle);
 
+    Course course = courseManager.getCourse(courseId);
+    System.out.println("Course found? " + (course != null));
+
+    Lesson lesson = lessonManager.getLesson(course, lessonId);
+    System.out.println("Lesson found? " + (lesson != null));
+
+    boolean created = instructor.addQuiz(lessonManager, courseManager,
+            courseId, lessonId, quizTitle, 0, new ArrayList<>());
+    
+    System.out.println("Created = " + created);
     if (courseId == null || lessonId == null || quizTitle.isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(this, 
             "Select course, lesson, and enter quiz title.");
         return;
     }
 
-    boolean created = instructor.addQuiz(lessonManager, courseManager, courseId, lessonId, quizTitle, 0, new java.util.ArrayList<>());
+   // boolean created = instructor.addQuiz(lessonManager, courseManager, courseId, lessonId, quizTitle, 0, new java.util.ArrayList<>());
 
     if (created) {
         javax.swing.JOptionPane.showMessageDialog(this, 
