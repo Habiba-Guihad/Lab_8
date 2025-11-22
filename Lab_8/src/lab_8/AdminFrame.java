@@ -30,8 +30,12 @@ import javax.swing.table.DefaultTableModel;
     //
     public Adminframe() {
         initUI();
-    }
+    }  
     private void loadPendingCoursesTable() {
+
+        if (courseManager == null) {
+            return;  // avoid null pointer if using the empty constructor
+        }
 
         pendingCourses = courseManager.getPendingCourses();
 
@@ -57,7 +61,6 @@ import javax.swing.table.DefaultTableModel;
     }
 
     private void approveCourse() {
-
         int row = courseTable.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Select a course to approve");
@@ -65,7 +68,6 @@ import javax.swing.table.DefaultTableModel;
         }
 
         Course selected = pendingCourses.get(row);
-
         boolean ok = courseManager.approveCourse(selected.getCourseId());
 
         if (ok) {
@@ -76,7 +78,6 @@ import javax.swing.table.DefaultTableModel;
     }
 
     private void rejectCourse() {
-
         int row = courseTable.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Select a course to reject");
@@ -84,7 +85,6 @@ import javax.swing.table.DefaultTableModel;
         }
 
         Course selected = pendingCourses.get(row);
-
         boolean ok = courseManager.rejectCourse(selected.getCourseId());
 
         if (ok) {
@@ -126,20 +126,26 @@ import javax.swing.table.DefaultTableModel;
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-     private void initUI() {
+     
+
+    private void initUI() {
+
         setTitle("Admin Dashboard");
-        setSize(700, 450);
+        setSize(750, 480);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        // Toolbar
         toolbar = new JToolBar();
         toolbar.setFloatable(false);
-        toolbarLabel = new JLabel("    Admin Dashboard");
+        toolbarLabel = new JLabel("   Admin Dashboard");
         toolbar.add(toolbarLabel);
 
+        // Table
         courseTable = new JTable();
         tableScroll = new JScrollPane(courseTable);
 
+        // Buttons
         approveBtn = new JButton("Approve");
         rejectBtn = new JButton("Reject");
         backBtn = new JButton("Back");
@@ -150,39 +156,40 @@ import javax.swing.table.DefaultTableModel;
         backBtn.addActionListener(e -> goBack());
         logoutBtn.addActionListener(e -> logout());
 
+        // Layout
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
 
         layout.setHorizontalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(toolbar, GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addComponent(toolbar, GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tableScroll, GroupLayout.PREFERRED_SIZE, 450, GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
+                .addComponent(tableScroll, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
+                .addGap(20)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(approveBtn, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rejectBtn, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(backBtn, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(logoutBtn, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(approveBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rejectBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(logoutBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         layout.setVerticalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(toolbar, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+                .addComponent(toolbar, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20)
+                        .addGap(25)
                         .addComponent(approveBtn)
-                        .addGap(10)
+                        .addGap(15)
                         .addComponent(rejectBtn)
-                        .addGap(40)
+                        .addGap(45)
                         .addComponent(backBtn)
-                        .addGap(10)
+                        .addGap(15)
                         .addComponent(logoutBtn))
-                    .addComponent(tableScroll, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tableScroll, GroupLayout.PREFERRED_SIZE, 380, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -191,9 +198,11 @@ import javax.swing.table.DefaultTableModel;
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+     public static void main(String[] args) {
         new Adminframe().setVisible(true);
-    }    private JTable courseTable;
+    }  
+    
+    private JTable courseTable;
     private JScrollPane tableScroll;
     private JButton approveBtn;
     private JButton rejectBtn;
@@ -201,8 +210,7 @@ import javax.swing.table.DefaultTableModel;
     private JButton logoutBtn;
     private JToolBar toolbar;
     private JLabel toolbarLabel;
-
-
+ }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-}
+
