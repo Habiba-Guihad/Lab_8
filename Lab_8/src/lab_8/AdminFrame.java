@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author New Eng
  */
-public class Adminframe extends JFrame {
+    public class Adminframe extends JFrame {
     private CourseManager courseManager;
     private JsonDatabaseManager db;
     private ArrayList<Course> pendingCourses;
@@ -28,7 +28,6 @@ public class Adminframe extends JFrame {
         loadPendingCoursesTable();
     }
     //
-    // Empty constructor
     public Adminframe() {
         initUI();
     }
@@ -58,6 +57,7 @@ public class Adminframe extends JFrame {
     }
 
     private void approveCourse() {
+
         int row = courseTable.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Select a course to approve");
@@ -65,6 +65,7 @@ public class Adminframe extends JFrame {
         }
 
         Course selected = pendingCourses.get(row);
+
         boolean ok = courseManager.approveCourse(selected.getCourseId());
 
         if (ok) {
@@ -75,6 +76,7 @@ public class Adminframe extends JFrame {
     }
 
     private void rejectCourse() {
+
         int row = courseTable.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Select a course to reject");
@@ -82,6 +84,7 @@ public class Adminframe extends JFrame {
         }
 
         Course selected = pendingCourses.get(row);
+
         boolean ok = courseManager.rejectCourse(selected.getCourseId());
 
         if (ok) {
@@ -123,116 +126,82 @@ public class Adminframe extends JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    private void initUI() {
+     private void initUI() {
+        setTitle("Admin Dashboard");
+        setSize(700, 450);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        // Toolbar
         toolbar = new JToolBar();
         toolbar.setFloatable(false);
-
         toolbarLabel = new JLabel("    Admin Dashboard");
         toolbar.add(toolbarLabel);
 
-        // Table
         courseTable = new JTable();
         tableScroll = new JScrollPane(courseTable);
 
-        // Buttons
-        approveBtn = new JToggleButton("Approve");
-        rejectBtn = new JToggleButton("Reject");
-        backBtn = new JToggleButton("Back");
-        logoutBtn = new JToggleButton("Logout");
+        approveBtn = new JButton("Approve");
+        rejectBtn = new JButton("Reject");
+        backBtn = new JButton("Back");
+        logoutBtn = new JButton("Logout");
 
         approveBtn.addActionListener(e -> approveCourse());
         rejectBtn.addActionListener(e -> rejectCourse());
         backBtn.addActionListener(e -> goBack());
         logoutBtn.addActionListener(e -> logout());
 
-        // Layout
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
 
         layout.setHorizontalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(toolbar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(tableScroll, GroupLayout.PREFERRED_SIZE, 380, GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(approveBtn, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(rejectBtn, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(backBtn, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(logoutBtn, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(12, Short.MAX_VALUE))
+            .addComponent(toolbar, GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tableScroll, GroupLayout.PREFERRED_SIZE, 450, GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(approveBtn, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rejectBtn, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backBtn, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(logoutBtn, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         layout.setVerticalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(toolbar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(10, 10, 10)
-                            .addComponent(approveBtn)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(rejectBtn)
-                            .addGap(60, 60, 60)
-                            .addComponent(backBtn)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(logoutBtn))
-                        .addGroup(layout.createSequentialGroup()
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(tableScroll, GroupLayout.PREFERRED_SIZE, 280, GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(14, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(toolbar, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20)
+                        .addComponent(approveBtn)
+                        .addGap(10)
+                        .addComponent(rejectBtn)
+                        .addGap(40)
+                        .addComponent(backBtn)
+                        .addGap(10)
+                        .addComponent(logoutBtn))
+                    .addComponent(tableScroll, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
-        setTitle("Admin Dashboard");
-        setLocationRelativeTo(null);
-    }    
+    }
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Adminframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Adminframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Adminframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Adminframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Adminframe().setVisible(true);
-            }
-        });
-    }
-    private JTable courseTable;
+    public static void main(String[] args) {
+        new Adminframe().setVisible(true);
+    }    private JTable courseTable;
     private JScrollPane tableScroll;
-    private JToggleButton approveBtn;
-    private JToggleButton rejectBtn;
-    private JToggleButton backBtn;
-    private JToggleButton logoutBtn;
+    private JButton approveBtn;
+    private JButton rejectBtn;
+    private JButton backBtn;
+    private JButton logoutBtn;
     private JToolBar toolbar;
     private JLabel toolbarLabel;
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
