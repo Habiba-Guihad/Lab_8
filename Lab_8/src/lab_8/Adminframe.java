@@ -27,7 +27,7 @@ public class Adminframe extends JFrame {
         initUI();
         loadPendingCoursesTable();
     }
-
+    //
     // Empty constructor
     public Adminframe() {
         initUI();
