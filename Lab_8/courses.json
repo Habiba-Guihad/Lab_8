@@ -124,5 +124,32 @@
         "courseId": "C5",
         "instructorId": "25f8aad0-a010-4bc0-b34a-bcdd35045a31",
         "lessons": []
+    },
+    {
+        "approvalStatus": "PENDING",
+        "description": "1",
+        "students": [],
+        "title": "hana1",
+        "courseId": "C6",
+        "instructorId": "bca7898a-2477-4763-a614-74afa8078a46",
+        "lessons": []
+    },
+    {
+        "approvalStatus": "PENDING",
+        "description": "2",
+        "students": [],
+        "title": "hana2",
+        "courseId": "C7",
+        "instructorId": "bca7898a-2477-4763-a614-74afa8078a46",
+        "lessons": []
+    },
+    {
+        "approvalStatus": "PENDING",
+        "description": "3",
+        "students": [],
+        "title": "hana3",
+        "courseId": "C8",
+        "instructorId": "bca7898a-2477-4763-a614-74afa8078a46",
+        "lessons": []
     }
 ]

@@ -12,15 +12,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author New Eng
  */
-    public class Adminframe extends JFrame {
+    public class AdminFrame extends JFrame {
     private CourseManager courseManager;
     private JsonDatabaseManager db;
     private ArrayList<Course> pendingCourses;
 
     /**
-     * Creates new form Adminframe
+     * Creates new form AdminFrame
      */
-     public Adminframe(CourseManager courseManager, JsonDatabaseManager db) {
+     public AdminFrame(CourseManager courseManager, JsonDatabaseManager db) {
         this.courseManager = courseManager;
         this.db = db;
 
@@ -28,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
         loadPendingCoursesTable();
     }
     //
-    public Adminframe() {
+    public AdminFrame() {
         initUI();
     }  
     private void loadPendingCoursesTable() {
@@ -201,7 +201,7 @@ import javax.swing.table.DefaultTableModel;
     public static void main(String[] args) {
     JsonDatabaseManager db = new JsonDatabaseManager();
     CourseManager cm = new CourseManager(db);
-     new Adminframe(cm, db).setVisible(true);
+     new AdminFrame(cm, db).setVisible(true);
 
    }  
     private JTable courseTable;

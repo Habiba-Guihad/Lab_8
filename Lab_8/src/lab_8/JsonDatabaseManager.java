@@ -130,9 +130,10 @@ public class JsonDatabaseManager {
 
             } else if (role.equalsIgnoreCase("instructor")) {
                 ArrayList<String> created = new ArrayList<>();
-                JSONArray createdArr = obj.optJSONArray("createdCourses");
+                JSONArray createdArr = obj.getJSONArray("createdCourses");//sheltopt w 7atet get
                 if (createdArr != null) {
-                    for (int j = 0; j < createdArr.length(); j++) created.add(createdArr.getString(j));
+                    for (int j = 0; j < createdArr.length(); j++)
+                        created.add(createdArr.getString(j));
                 }
                 users.add(new Instructor(userId, username, email, passwordHash, created));
 

@@ -158,7 +158,7 @@ public class LoginFrame extends javax.swing.JFrame {
         else if(user.getRole()==Role.ADMIN){
            JsonDatabaseManager db=new JsonDatabaseManager();
            CourseManager cm=new CourseManager(db);
-           new Adminframe(cm,db).setVisible(true);
+           new AdminFrame(cm,db).setVisible(true);
         }
         else
             JOptionPane.showMessageDialog(this,"unknown role");
