@@ -22,28 +22,52 @@ public class TakeQuizFrame extends javax.swing.JFrame {
     private String courseId;
     public TakeQuizFrame(String studentId,String courseId,Quiz quiz) {
         initComponents();
-        this.quiz=quiz;
+         this.studentId = studentId;//*
+         this.courseId = courseId;//*
+         this.quiz=quiz;
+          if (quiz == null || quiz.getQuestions() == null || quiz.getQuestions().isEmpty()) {//*
+        JOptionPane.showMessageDialog(this, "Quiz not found or empty!");
+        this.dispose();
+        return;
+         }//*
+        
         jLabel1.setText(quiz.getTitle());
         btnSubmit.setVisible(false);
+        currentIndex = 0; 
         loadQuestion();
     }
     public TakeQuizFrame() {
     initComponents();
 }
 public void loadQuestion(){
-    btnNext.setVisible(true);
-    btnSubmit.setVisible(false);
+   if (quiz == null || quiz.getQuestions() == null || currentIndex >= quiz.getQuestions().size()){//*
+        btnNext.setVisible(false);
+        btnSubmit.setVisible(false);
+       return;// prevents IndexOutOfBounds//*
+   }
+    //*btnNext.setVisible(true);
+    //*btnSubmit.setVisible(false);
     Question q=quiz.getQuestions().get(currentIndex);
     jLabel2.setText((currentIndex+1) + "." + q.getQuestionText());
-    jRadioButton1.setText(q.getOptions().get(0));
-    jRadioButton2.setText(q.getOptions().get(1));
-    jRadioButton3.setText(q.getOptions().get(2));
-    jRadioButton4.setText(q.getOptions().get(3));
+     List<String> opts = q.getOptions();//*
+     jRadioButton1.setText(opts.size() > 0 ? opts.get(0) : "");
+    jRadioButton2.setText(opts.size() > 1 ? opts.get(1) : "");
+    jRadioButton3.setText(opts.size() > 2 ? opts.get(2) : "");
+    jRadioButton4.setText(opts.size() > 3 ? opts.get(3) : "");//*
     choiceGroup.clearSelection();
-    if(currentIndex==quiz.getQuestions().size()-1){
-        btnNext.setVisible(false);
-        btnSubmit.setVisible(true);
-    }
+    btnNext.setVisible(currentIndex < quiz.getQuestions().size() - 1);
+    btnSubmit.setVisible(currentIndex == quiz.getQuestions().size() - 1);
+    //jRadioButton1.setText(q.getOptions().get(0));
+    //jRadioButton2.setText(q.getOptions().get(1));
+    //jRadioButton3.setText(q.getOptions().get(2));
+    //jRadioButton4.setText(q.getOptions().get(3));
+    //choiceGroup.clearSelection();
+    //btnNext.setVisible(currentIndex < quiz.getQuestions().size() - 1);
+    //btnSubmit.setVisible(currentIndex == quiz.getQuestions().size() - 1);
+    //if(currentIndex==quiz.getQuestions().size()-1){
+       // btnNext.setVisible(false);
+      //  btnSubmit.setVisible(true);
+    //}
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -170,8 +194,21 @@ public void loadQuestion(){
         return;
         }
         userAnswers.add(selected);
-        currentIndex++;
-        loadQuestion();
+       currentIndex++;
+       loadQuestion();
+      //  if (currentIndex < quiz.getQuestions().size()) {//*
+      //  userAnswers.add(selected);//*
+    //}//*
+    //     currentIndex++;
+    //if (currentIndex < quiz.getQuestions().size()) {
+     //   loadQuestion();
+    //} else { currentIndex = quiz.getQuestions().size() - 1;
+     //   btnNext.setVisible(false);
+     //   btnSubmit.setVisible(true);
+    //}//*
+       // userAnswers.add(selected);
+       // currentIndex++;
+       // loadQuestion();
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed

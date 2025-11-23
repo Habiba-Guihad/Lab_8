@@ -40,11 +40,67 @@
     {
         "role": "student",
         "certificates": [],
-        "enrolledCourses": [3],
-        "progress": {"3": ["L2"]},
+        "enrolledCourses": [
+            3,
+            2,
+            4
+        ],
+        "progress": {
+            "2": ["L1"],
+            "3": ["L2"],
+            "4": ["L1"]
+        },
         "userId": "9433876e-e479-4619-b642-14748be4fa57",
         "email": "h@g",
         "passwordHash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "h"
+    },
+    {
+        "role": "student",
+        "certificates": [],
+        "enrolledCourses": [3],
+        "progress": {"3": ["L2"]},
+        "userId": "8607fbd2-0762-40ec-babb-e5fca5070737",
+        "email": "h@o",
+        "passwordHash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "h"
+    },
+    {
+        "role": "student",
+        "certificates": [],
+        "enrolledCourses": [3],
+        "progress": {"3": ["L2"]},
+        "userId": "24bf6d41-e652-4d6d-88cc-d6bbe6f2301d",
+        "email": "a@a",
+        "passwordHash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+        "username": "aa"
+    },
+    {
+        "role": "student",
+        "certificates": [],
+        "enrolledCourses": [3],
+        "progress": {},
+        "userId": "4b642541-7a7f-4f99-b15f-97b77142c0eb",
+        "email": "o@o",
+        "passwordHash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "o"
+    },
+    {
+        "role": "student",
+        "certificates": [],
+        "enrolledCourses": [3],
+        "progress": {"3": ["L2"]},
+        "userId": "bf50ae2e-4863-410c-bea4-9907d7cd2f5f",
+        "email": "o@a",
+        "passwordHash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "o"
+    },
+    {
+        "role": "instructor",
+        "createdCourses": [],
+        "userId": "10abef3b-5e35-46c3-a5e3-87596f0fbb3d",
+        "email": "hh@h",
+        "passwordHash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
         "username": "h"
     }
 ]

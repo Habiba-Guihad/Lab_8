@@ -399,19 +399,21 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
     Lesson selectedLesson = lessons.get(lessonIndex);
 
     int courseIdInt = Integer.parseInt(selectedCourse.getCourseId().replaceAll("\\D", ""));
-    student.getProgress().putIfAbsent(courseIdInt, new ArrayList<>());
-    List<String> completed = student.getProgress().get(courseIdInt);
-
-    if (!completed.contains(selectedLesson.getLessonId())) {
-        completed.add(selectedLesson.getLessonId());
-        db.saveUsers();
+   // student.getProgress().putIfAbsent(courseIdInt, new ArrayList<>());
+    //List<String> completed = student.getProgress().get(courseIdInt);
+    student.completeLesson(courseIdInt, selectedLesson.getLessonId());//*
+    db.saveUsers();//*
+    listEnrolledValueChanged(null);//*
+    //if (!completed.contains(selectedLesson.getLessonId())) {
+      //  completed.add(selectedLesson.getLessonId());
+       // db.saveUsers();
         // refresh lessons list
-        listEnrolledValueChanged(null);
-    }
+       // listEnrolledValueChanged(null);
+   // }
     if (student.hasCompletedCourse(selectedCourse))
     {
-    int cId = Integer.parseInt(selectedCourse.getCourseId().replaceAll("\\D", ""));
-    student.awardCertificate(cId);
+   // int cId = Integer.parseInt(selectedCourse.getCourseId().replaceAll("\\D", ""));
+    student.awardCertificate(courseIdInt);//replaced bet brackets by cId
     Certificate cert = student.getCertificates().get(student.getCertificates().size() - 1);
     db.generateCertificatePDF(student, selectedCourse, cert);
     db.saveUsers();
@@ -458,15 +460,20 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
        Course selectedCourse = enrolledCourses.get(courseIndex);
        List<Lesson>lessons=(List<Lesson>) listLessons.getClientProperty("lessons");
        Lesson selectedLesson = lessons.get(lessonIndex);
-       if (!selectedLesson.isCompleted()) {
+       int courseIdInt = Integer.parseInt(selectedCourse.getCourseId().replaceAll("\\D", ""));//*
+       if (!student.isLessonCompleted(courseIdInt, selectedLesson.getLessonId())) {
         JOptionPane.showMessageDialog(this,"You must complete this lesson before taking the quiz.");
         return;
     }
+       
        Quiz quiz=selectedLesson.getQuiz();
        if(quiz==null){
            JOptionPane.showMessageDialog(this,"This lesson has no quiz");
            return;
        }
+       System.out.println("Quiz title: " + quiz.getTitle());//*
+      System.out.println("Number of questions: " + quiz.getQuestions().size());//*
+
        String studentId=student.getUserId();
        String courseId=selectedCourse.getCourseId();
        TakeQuizFrame qf=new TakeQuizFrame(studentId,courseId,quiz);
