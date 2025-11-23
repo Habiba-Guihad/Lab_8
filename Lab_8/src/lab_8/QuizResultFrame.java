@@ -24,6 +24,8 @@ public class QuizResultFrame extends javax.swing.JFrame {
 
     public QuizResultFrame(Student student,Course course,Quiz quiz, int score) {
         initComponents();
+        this.student = student;
+        this.selectedCourse = course;
         this.quiz = quiz;
         this.score = score;
         this.student=student;
@@ -31,6 +33,7 @@ public class QuizResultFrame extends javax.swing.JFrame {
         jLabel1.setText(quiz.getTitle());
         jLabel2.setText("Your score: " + score + "%");
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
