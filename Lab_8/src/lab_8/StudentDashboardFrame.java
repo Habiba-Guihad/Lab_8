@@ -451,7 +451,7 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
        Course selectedCourse = enrolledCourses.get(courseIndex);
        List<Lesson>lessons=(List<Lesson>) listLessons.getClientProperty("lessons");
        Lesson selectedLesson = lessons.get(lessonIndex);
-       int courseIdInt = Integer.parseInt(selectedCourse.getCourseId().replaceAll("\\D", ""));//*
+       int courseIdInt = Integer.parseInt(selectedCourse.getCourseId().replaceAll("\\D", ""));
        if (!student.isLessonCompleted(courseIdInt, selectedLesson.getLessonId())) {
         JOptionPane.showMessageDialog(this,"You must complete this lesson before taking the quiz.");
         return;
@@ -462,8 +462,6 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(this,"This lesson has no quiz");
            return;
        }
-     //  System.out.println("Quiz title: " + quiz.getTitle());
-      //System.out.println("Number of questions: " + quiz.getQuestions().size());
 
        String studentId=student.getUserId();
        String courseId=selectedCourse.getCourseId();
