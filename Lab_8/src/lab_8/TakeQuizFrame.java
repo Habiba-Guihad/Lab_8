@@ -202,7 +202,7 @@ public void loadQuestion(){
         int score=quiz.calculateScore(userAnswers);
         QuizManager manager=new QuizManager();
         manager.saveAttempt(studentId, courseId, quiz, score);
-        new QuizResultFrame(quiz, score).setVisible(true);
+        new QuizResultFrame(student, selectedCourse,quiz, score).setVisible(true);
         new QuizReviewFrame(quiz, userAnswers).setVisible(true); 
         if (student.hasCompletedEverything(selectedCourse)) {
         student.awardCertificate(courseIdInt);

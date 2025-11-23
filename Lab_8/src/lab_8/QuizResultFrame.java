@@ -13,6 +13,8 @@ public class QuizResultFrame extends javax.swing.JFrame {
     private Quiz quiz;
     private int score;
     private List <Integer> userAnswers;
+    private Student student;
+    private Course selectedCourse;
     /**
      * Creates new form QuizResultFrame
      */
@@ -20,13 +22,16 @@ public class QuizResultFrame extends javax.swing.JFrame {
         initComponents();
     }
 
-    public QuizResultFrame(Quiz quiz, int score) {
+    public QuizResultFrame(Student student,Course course,Quiz quiz, int score) {
         initComponents();
+        this.student = student;
+        this.selectedCourse = course;
         this.quiz = quiz;
         this.score = score;
         jLabel1.setText(quiz.getTitle());
         jLabel2.setText("Your score: " + score + "%");
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -114,7 +119,7 @@ public class QuizResultFrame extends javax.swing.JFrame {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         dispose();
-        new StudentDashboardFrame().setVisible(true);
+        new StudentDashboardFrame(student).setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReviewActionPerformed

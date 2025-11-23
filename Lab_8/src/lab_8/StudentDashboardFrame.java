@@ -29,6 +29,7 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
         // Check if user is Student
         if (user instanceof Student) {
             this.student = (Student) user;
+            this.student.setDbManager(db);
         } else {
             JOptionPane.showMessageDialog(this, "Error: Logged-in user is not a student!");
             dispose();
@@ -53,15 +54,16 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
     }
      
      public StudentDashboardFrame() {  
-    this(new Student(
-            "0",                // fake ID
-            "Test Student",     // fake name
-            "test@email.com",
-            "123",
-            new ArrayList<>(),  // empty enrolled courses
-            new HashMap<>(),
-            new ArrayList<>()// empty progress
-    ));
+//    this(new Student(
+//            "0",                // fake ID
+//            "Test Student",     // fake name
+//            "test@email.com",
+//            "123",
+//            new ArrayList<>(),  // empty enrolled courses
+//            new HashMap<>(),
+//            new ArrayList<>()// empty progress
+//    ));
+initComponents();
 }
     
     private void refreshLists() {

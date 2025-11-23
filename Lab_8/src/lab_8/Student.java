@@ -85,6 +85,9 @@ public Student(String userId, String username, String email, String passwordHash
         }
     }
 }
+public void setDbManager(JsonDatabaseManager dbManager) {
+    this.dbManager = dbManager;
+}
 
 // ---------- ACCESSORS ----------
 public ArrayList<Integer> getEnrolledCourses() { return enrolledCourses; }
