@@ -200,8 +200,8 @@ for (int row = 0; row < rowCount; row++) {
         if (newCourse != null) {
             // Update instructor's created courses
             if (!instructor.getCreatedCourses().contains(newCourse.getCourseId())) {
-                  instructor.addCourse(courseManager, titleCell, description) ;
-
+                 // instructor.addCourse(courseManager, titleCell, description) ;
+                   instructor.getCreatedCourses().add(newCourse.getCourseId());
             }
 
             // Update table with generated course ID

@@ -25,5 +25,32 @@
         "courseId": "C3",
         "instructorId": "5da76081-4501-4235-a2f8-d657a41b0694",
         "lessons": []
+    },
+    {
+        "approvalStatus": "PENDING",
+        "description": "1",
+        "students": [],
+        "title": "a1",
+        "courseId": "C4",
+        "instructorId": "3d8e43f7-2a09-44ec-8a73-699579a7f9b1",
+        "lessons": []
+    },
+    {
+        "approvalStatus": "PENDING",
+        "description": "1",
+        "students": [],
+        "title": "a1",
+        "courseId": "C5",
+        "instructorId": "3d8e43f7-2a09-44ec-8a73-699579a7f9b1",
+        "lessons": []
+    },
+    {
+        "approvalStatus": "PENDING",
+        "description": "2",
+        "students": [],
+        "title": "a2",
+        "courseId": "C6",
+        "instructorId": "3d8e43f7-2a09-44ec-8a73-699579a7f9b1",
+        "lessons": []
     }
 ]

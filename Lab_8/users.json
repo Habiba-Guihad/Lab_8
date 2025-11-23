@@ -14,5 +14,14 @@
         "email": "g@g",
         "passwordHash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
         "username": "g"
+    },
+    {
+        "role": "instructor",
+        "createdLessons": [],
+        "createdCourses": [],
+        "userId": "3d8e43f7-2a09-44ec-8a73-699579a7f9b1",
+        "email": "a@",
+        "passwordHash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "aa"
     }
 ]
