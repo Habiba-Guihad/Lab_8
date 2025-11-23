@@ -1,31 +1,53 @@
 [
     {
         "approvalStatus": "PENDING",
-        "description": "w",
-        "students": ["b3512f75-07d0-4c2a-a95b-b098b1c8be8e"],
+        "description": "",
+        "students": [
+            "0139f984-c154-4c5d-aba9-e2da45cd7363",
+            "e7ea2303-a3d1-4444-b605-f26448efad2d"
+        ],
         "title": "prog",
         "courseId": "C1",
-        "instructorId": "d383688b-8cc2-40c4-a921-bdaed019cb67",
+        "instructorId": "7bdf7c21-4c3c-4ef9-af52-27e93d759877",
         "lessons": [
             {
                 "quiz": {
-                    "questions": [],
+                    "questions": [
+                        {
+                            "options": [
+                                "2",
+                                "1",
+                                "3"
+                            ],
+                            "correctIndex": 0,
+                            "questionText": "1+1"
+                        },
+                        {
+                            "options": [
+                                "1",
+                                "3",
+                                "4"
+                            ],
+                            "correctIndex": 2,
+                            "questionText": "2+2"
+                        }
+                    ],
                     "passingScore": 0,
-                    "title": ""
+                    "title": "heyy"
                 },
                 "lessonId": "L1",
-                "title": "java",
-                "content": "w"
+                "title": "OOP",
+                "content": ""
             },
             {
                 "lessonId": "L2",
-                "title": "OOP",
-                "content": "q"
+                "title": "java",
+                "content": ""
             },
             {
                 "lessonId": "L3",
                 "title": "SOLID",
-                "content": "w"
+                "content": ""
             }
         ]
     },
@@ -33,55 +55,21 @@
         "approvalStatus": "PENDING",
         "description": "",
         "students": [
-            "b3512f75-07d0-4c2a-a95b-b098b1c8be8e",
-            "9433876e-e479-4619-b642-14748be4fa57"
+            "0139f984-c154-4c5d-aba9-e2da45cd7363",
+            "e7ea2303-a3d1-4444-b605-f26448efad2d"
         ],
         "title": "math",
         "courseId": "C2",
-        "instructorId": "d383688b-8cc2-40c4-a921-bdaed019cb67",
+        "instructorId": "7bdf7c21-4c3c-4ef9-af52-27e93d759877",
         "lessons": [
             {
-                "quiz": {
-                    "questions": [],
-                    "passingScore": 0,
-                    "title": ""
-                },
                 "lessonId": "L1",
                 "title": "Diff",
                 "content": ""
             },
             {
                 "lessonId": "L2",
-                "title": "Int",
-                "content": ""
-            },
-            {
-                "quiz": {
-                    "questions": [
-                        {
-                            "options": [
-                                "+",
-                                "-",
-                                "="
-                            ],
-                            "correctIndex": 0,
-                            "questionText": "1"
-                        },
-                        {
-                            "options": [
-                                "+",
-                                "*",
-                                "/"
-                            ],
-                            "correctIndex": 0,
-                            "questionText": "2"
-                        }
-                    ],
-                    "passingScore": 0,
-                    "title": "m1"
-                },
-                "lessonId": "L3",
-                "title": "add",
+                "title": "int",
                 "content": ""
             }
         ]
@@ -89,103 +77,10 @@
     {
         "approvalStatus": "PENDING",
         "description": "",
-        "students": [
-            "9433876e-e479-4619-b642-14748be4fa57",
-            "8607fbd2-0762-40ec-babb-e5fca5070737",
-            "24bf6d41-e652-4d6d-88cc-d6bbe6f2301d",
-            "4b642541-7a7f-4f99-b15f-97b77142c0eb",
-            "bf50ae2e-4863-410c-bea4-9907d7cd2f5f"
-        ],
-        "title": "sports",
-        "courseId": "C3",
-        "instructorId": "5c950f22-5639-41b0-ab54-70da7cdecae1",
-        "lessons": [
-            {
-                "quiz": {
-                    "questions": [],
-                    "passingScore": 0,
-                    "title": ""
-                },
-                "lessonId": "L1",
-                "title": "balls",
-                "content": "handball"
-            },
-            {
-                "quiz": {
-                    "questions": [
-                        {
-                            "options": [
-                                "1",
-                                "2",
-                                "3"
-                            ],
-                            "correctIndex": 1,
-                            "questionText": "t is a"
-                        },
-                        {
-                            "options": [
-                                "4",
-                                "5",
-                                "6"
-                            ],
-                            "correctIndex": 2,
-                            "questionText": "hi"
-                        }
-                    ],
-                    "passingScore": 0,
-                    "title": "t"
-                },
-                "lessonId": "L2",
-                "title": "rackets",
-                "content": "tennis"
-            }
-        ]
-    },
-    {
-        "approvalStatus": "PENDING",
-        "description": "",
-        "students": ["9433876e-e479-4619-b642-14748be4fa57"],
-        "title": "a",
-        "courseId": "C4",
-        "instructorId": "10abef3b-5e35-46c3-a5e3-87596f0fbb3d",
-        "lessons": [
-            {
-                "quiz": {
-                    "questions": [],
-                    "passingScore": 0,
-                    "title": ""
-                },
-                "lessonId": "L1",
-                "title": "aa",
-                "content": "a"
-            },
-            {
-                "quiz": {
-                    "questions": [{
-                        "options": [
-                            "a",
-                            "b",
-                            "c"
-                        ],
-                        "correctIndex": 0,
-                        "questionText": "1"
-                    }],
-                    "passingScore": 0,
-                    "title": "tt"
-                },
-                "lessonId": "L2",
-                "title": "bb",
-                "content": "b"
-            }
-        ]
-    },
-    {
-        "approvalStatus": "PENDING",
-        "description": "d",
         "students": [],
-        "title": "c",
-        "courseId": "C5",
-        "instructorId": "10abef3b-5e35-46c3-a5e3-87596f0fbb3d",
+        "title": "physics",
+        "courseId": "C3",
+        "instructorId": "7bdf7c21-4c3c-4ef9-af52-27e93d759877",
         "lessons": []
     }
 ]

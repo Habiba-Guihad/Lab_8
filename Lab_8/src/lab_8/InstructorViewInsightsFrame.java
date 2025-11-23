@@ -15,87 +15,97 @@ import java.util.stream.Collectors;
 
 public class InstructorViewInsightsFrame extends javax.swing.JFrame {
 
-private Instructor instructor;
-private CourseManager courseManager;
-private ChartFrame chartFrame;
-private JsonDatabaseManager dbManager;
+    private Instructor instructor;
+    private CourseManager courseManager;
+    private ChartFrame chartFrame;
+    private JsonDatabaseManager dbManager;
 
-public InstructorViewInsightsFrame(Instructor instructor, CourseManager courseManager, JsonDatabaseManager dbManager) {
-    this.instructor = instructor;
-    this.courseManager = courseManager;
-    this.dbManager = dbManager;
-    initComponents(); // NetBeans GUI-generated components
-    setupInsightsPanel();
-}
-public InstructorViewInsightsFrame() {
-    initComponents(); 
-}
+    public InstructorViewInsightsFrame(Instructor instructor,
+                                       CourseManager courseManager,
+                                       JsonDatabaseManager dbManager) {
 
-private void setupInsightsPanel() {
-    chartFrame = new ChartFrame("Course Analytics");
+        this.instructor = instructor;
+        this.courseManager = courseManager;
+        this.dbManager = dbManager;
 
-    // Populate courses combo box
-    courseComboBox.removeAllItems();
-    List<Course> instructorCourses = courseManager.getCoursesByInstructor(instructor.getUserId());
-    for (Course c : instructorCourses) {
-        courseComboBox.addItem(c.getTitle());
+        initComponents();
+        setupInsightsPanel();
     }
 
-    // Automatically select the first course and refresh charts
-    if (courseComboBox.getItemCount() > 0) {
-        courseComboBox.setSelectedIndex(0);
-        refreshCharts();
+    public InstructorViewInsightsFrame() {
+        initComponents();
     }
 
-    // When course changes, refresh charts automatically
-    courseComboBox.addActionListener(e -> refreshCharts());
+    private void setupInsightsPanel() {
 
-    // Show Analytics button
-    showAnalyticsButton.addActionListener(e -> {
-        refreshCharts();
-        if (!chartFrame.isVisible()) chartFrame.setVisible(true);
-        chartFrame.toFront();
-        chartFrame.repaint();
-    });
-}
+        if (instructor == null || courseManager == null) {
+            JOptionPane.showMessageDialog(this, "Error: Missing instructor or course manager.");
+            return;
+        }
 
-private void refreshCharts() {
-    String selectedCourseTitle = (String) courseComboBox.getSelectedItem();
-    if (selectedCourseTitle == null) return;
+        chartFrame = new ChartFrame("Course Analytics");
 
-    Course selectedCourse = getCourseByTitle(selectedCourseTitle);
-    if (selectedCourse == null) return;
+        // Load instructor courses
+        courseComboBox.removeAllItems();
+        List<Course> instructorCourses = courseManager.getCoursesByInstructor(instructor.getUserId());
 
-    // Get enrolled students
-    List<String> enrolledStudentIds = instructor.viewEnrolledStudents(courseManager, selectedCourse.getCourseId());
-    if (enrolledStudentIds == null) return;
+        for (Course c : instructorCourses) {
+            courseComboBox.addItem(c.getTitle());
+        }
 
-    List<Student> students = enrolledStudentIds.stream()
-            .map(id -> dbManager.getStudentById(id))
-            .filter(s -> s != null)
-            .collect(Collectors.toList());
+        if (courseComboBox.getItemCount() > 0) {
+            courseComboBox.setSelectedIndex(0);
+            refreshCharts();
+        }
 
-    // Update charts (all lessons aggregated into course-level view)
-    chartFrame.updateCharts(selectedCourse, students, instructor);
-}
+        // Refresh charts whenever user changes the selected course
+        courseComboBox.addActionListener(e -> refreshCharts());
 
-private Course getCourseByTitle(String title) {
-    List<Course> instructorCourses = courseManager.getCoursesByInstructor(instructor.getUserId());
-    for (Course c : instructorCourses) {
-        if (c.getTitle().equals(title)) return c;
+        showAnalyticsButton.addActionListener(e -> {
+            refreshCharts();
+            chartFrame.setLocationRelativeTo(this);
+
+            if (!chartFrame.isVisible()) {
+                chartFrame.setVisible(true);
+            } else {
+                chartFrame.toFront();
+            }
+
+            chartFrame.repaint();
+        });
     }
-    return null;
-}
 
+    private void refreshCharts() {
+        String selectedCourseTitle = (String) courseComboBox.getSelectedItem();
+        if (selectedCourseTitle == null) return;
 
+        Course selectedCourse = getCourseByTitle(selectedCourseTitle);
+        if (selectedCourse == null) return;
 
+        List<String> enrolledStudentIds =
+                instructor.viewEnrolledStudents(courseManager, selectedCourse.getCourseId());
 
+        if (enrolledStudentIds == null || enrolledStudentIds.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No students enrolled in this course.");
+            return;
+        }
 
+        List<Student> students = enrolledStudentIds.stream()
+                .map(id -> dbManager.getStudentById(id))
+                .filter(s -> s != null)
+                .collect(Collectors.toList());
 
+        chartFrame.updateCharts(selectedCourse, students, instructor);
+    }
 
+    private Course getCourseByTitle(String title) {
+        List<Course> instructorCourses = courseManager.getCoursesByInstructor(instructor.getUserId());
+        for (Course c : instructorCourses) {
+            if (c.getTitle().equals(title)) return c;
+        }
+        return null;
+    }
 
-   
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -187,34 +197,35 @@ private Course getCourseByTitle(String title) {
 
     private void showAnalyticsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAnalyticsButtonActionPerformed
 
-// Refresh the charts based on current selections
-refreshCharts();
+    // Ensure the chart frame exists
+    if (chartFrame == null) {
+        chartFrame = new ChartFrame("Course Analytics");
+    }
 
-// Make sure the chart window is visible
-if (!chartFrame.isVisible()) {
-    chartFrame.setVisible(true);
-}
+    // Refresh charts
+    refreshCharts();
 
-// Bring chart window to front
-chartFrame.toFront();
-chartFrame.repaint();
+    // Show chart frame
+    if (!chartFrame.isVisible()) {
+        chartFrame.setVisible(true);
+    }
 
-   
+    // Bring to front (reliable trick)
+    chartFrame.setAlwaysOnTop(true);
+    chartFrame.toFront();
+    chartFrame.requestFocus();
+    chartFrame.setAlwaysOnTop(false);
+
+    chartFrame.repaint();
+
+
 
     }//GEN-LAST:event_showAnalyticsButtonActionPerformed
 
     private void courseComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseComboBoxActionPerformed
-// Course Combo Box Action
-// Get selected course title
-String selectedCourseTitle = (String) courseComboBox.getSelectedItem();
-if (selectedCourseTitle == null) return;
-
-// Find the Course object
-Course selectedCourse = getCourseByTitle(selectedCourseTitle);
-if (selectedCourse == null) return;
-
-// Refresh the charts for the selected course
-refreshCharts();
+ if (courseComboBox.getSelectedItem() != null) {
+        refreshCharts();
+    }
 
     }//GEN-LAST:event_courseComboBoxActionPerformed
 

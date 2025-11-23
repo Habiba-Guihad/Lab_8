@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package lab_8;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -15,82 +16,93 @@ import java.util.List;
 import java.util.Map;
 
 public class ChartFrame extends JFrame {
-private JTabbedPane tabbedPane;
 
-public ChartFrame(String title) {
-    super(title);
-    setSize(900, 600);
-    setLocationRelativeTo(null);
-    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    private JTabbedPane tabbedPane;
 
-    tabbedPane = new JTabbedPane();
-    setContentPane(tabbedPane);
-    setVisible(true);
-}
+    public ChartFrame(String title) {
+        super(title);
+        setSize(900, 600);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-public void updateCharts(Course course, List<Student> students, Instructor instructor) {
-    tabbedPane.removeAll();
+        tabbedPane = new JTabbedPane();
+        setContentPane(tabbedPane);
 
-    int courseId = Integer.parseInt(course.getCourseId().replaceAll("\\D", ""));
+        // IMPORTANT: Do NOT show automatically. Instructor chooses.
+        // setVisible(true);
+    }
 
-    // 1. Student Performance Chart
-    DefaultCategoryDataset studentDataset = new DefaultCategoryDataset();
+    public void updateCharts(Course course, List<Student> students, Instructor instructor) {
+tabbedPane.removeAll();
+
+int courseId = Integer.parseInt(course.getCourseId().replaceAll("\\D", ""));
+
+// -------------------- 1. Student Performance Chart --------------------
+DefaultCategoryDataset studentDataset = new DefaultCategoryDataset();
+for (Lesson lesson : course.getLessons()) {
+    String lessonTitle = lesson.getTitle();
+    Quiz quiz = lesson.getQuiz();
     for (Student s : students) {
-        for (Lesson lesson : course.getLessons()) {
-            Quiz quiz = lesson.getQuiz();
-            if (quiz != null) {
-                Integer score = s.getQuizScore(courseId, quiz.getTitle());
-                studentDataset.addValue(score != null ? score : 0, s.getUsername(), lesson.getTitle());
-            }
-        }
+        Integer score = (quiz != null) ? s.getQuizScore(courseId, quiz.getTitle()) : null;
+        // Convert score to percentage (assuming max score is quiz.getQuestions().size())
+        double percentage = (score != null && quiz != null) ? (score * 100.0 / quiz.getQuestions().size()) : 0;
+        studentDataset.addValue(percentage, s.getUsername(), lessonTitle);
     }
-    JFreeChart studentChart = ChartFactory.createLineChart(
-            "Student Performance",
-            "Lesson",
-            "Score",
-            studentDataset,
-            PlotOrientation.VERTICAL,
-            true, true, false
-    );
-    tabbedPane.addTab("Student Performance", new ChartPanel(studentChart));
-
-    // 2. Quiz Averages per Lesson Chart
-    DefaultCategoryDataset quizDataset = new DefaultCategoryDataset();
-    Map<String, Double> quizAverages = instructor.calculateQuizAverages(course, students);
-    for (String quizTitle : quizAverages.keySet()) {
-        quizDataset.addValue(quizAverages.get(quizTitle), "Average Score", quizTitle);
-    }
-    JFreeChart quizChart = ChartFactory.createBarChart(
-            "Quiz Averages per Lesson",
-            "Quiz Title",
-            "Average Score",
-            quizDataset,
-            PlotOrientation.VERTICAL,
-            true, true, false
-    );
-    tabbedPane.addTab("Quiz Averages", new ChartPanel(quizChart));
-
-    // 3. Course Completion Chart
-    DefaultCategoryDataset completionDataset = new DefaultCategoryDataset();
-    double courseCompletion = instructor.calculateCourseCompletion(course, students);
-    completionDataset.addValue(courseCompletion, "Course Completion", course.getTitle());
-
-    JFreeChart completionChart = ChartFactory.createBarChart(
-            "Course Completion",
-            "Course",
-            "Completion %",
-            completionDataset,
-            PlotOrientation.VERTICAL,
-            true, true, false
-    );
-
-    // Fix Y-axis to 0–100% and format as percentage
-    NumberAxis rangeAxis = (NumberAxis) completionChart.getCategoryPlot().getRangeAxis();
-    rangeAxis.setRange(0, 100);
-    rangeAxis.setNumberFormatOverride(new java.text.DecimalFormat("0'%"));
-
-    tabbedPane.addTab("Course Completion", new ChartPanel(completionChart));
 }
+JFreeChart studentChart = ChartFactory.createLineChart(
+        "Student Performance",
+        "Lesson",
+        "Score (%)",
+        studentDataset,
+        PlotOrientation.VERTICAL,
+        true, true, false
+);
+NumberAxis studentRangeAxis = (NumberAxis) studentChart.getCategoryPlot().getRangeAxis();
+studentRangeAxis.setRange(0, 100); // Y-axis 0–100%
+tabbedPane.addTab("Student Performance", new ChartPanel(studentChart));
 
+// -------------------- 2. Quiz Averages per Lesson Chart --------------------
+DefaultCategoryDataset quizDataset = new DefaultCategoryDataset();
+Map<String, Double> quizAverages = instructor.calculateQuizAverages(course, students);
+for (String quizTitle : quizAverages.keySet()) {
+    Quiz quiz = course.getLessons().stream()
+            .map(Lesson::getQuiz)
+            .filter(q -> q != null && q.getTitle().equals(quizTitle))
+            .findFirst().orElse(null);
+    if (quiz != null) {
+        double avgPercent = (quizAverages.get(quizTitle) * 100.0 / quiz.getQuestions().size());
+        quizDataset.addValue(avgPercent, "Average Score", quizTitle);
+    }
+}
+JFreeChart quizChart = ChartFactory.createBarChart(
+        "Quiz Averages per Lesson",
+        "Quiz",
+        "Average Score (%)",
+        quizDataset,
+        PlotOrientation.VERTICAL,
+        true, true, false
+);
+NumberAxis quizRangeAxis = (NumberAxis) quizChart.getCategoryPlot().getRangeAxis();
+quizRangeAxis.setRange(0, 100); // Y-axis 0–100%
+tabbedPane.addTab("Quiz Averages", new ChartPanel(quizChart));
 
+// -------------------- 3. Course Completion Chart --------------------
+DefaultCategoryDataset completionDataset = new DefaultCategoryDataset();
+for (Student s : students) {
+    double completionPercent = instructor.calculateCourseCompletion(course, List.of(s));
+    completionDataset.addValue(completionPercent, s.getUsername(), course.getTitle());
+}
+JFreeChart completionChart = ChartFactory.createBarChart(
+        "Course Completion",
+        "Student",
+        "Completion (%)",
+        completionDataset,
+        PlotOrientation.VERTICAL,
+        true, true, false
+);
+NumberAxis completionRangeAxis = (NumberAxis) completionChart.getCategoryPlot().getRangeAxis();
+completionRangeAxis.setRange(0, 100);
+tabbedPane.addTab("Course Completion", new ChartPanel(completionChart));
+
+}
 }
