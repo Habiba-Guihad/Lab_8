@@ -282,4 +282,29 @@ private int parseNumericId(String id) {
     }
 }
 
+public ArrayList<Student> viewEnrolledStudents(CourseManager courseManager, String courseId) {
+
+    ArrayList<Student> enrolledStudents = new ArrayList<>();
+
+    // Get the course
+    Course course = courseManager.getCourse(courseId);
+    if (course == null) {
+        return enrolledStudents; // empty list
+    }
+
+    // Loop through student IDs in the course
+    for (String studentId : course.getStudents()) {
+
+        // Find the student in the database
+        User u = courseManager.getDbManager().getStudentById(studentId);
+
+        if (u instanceof Student s) {
+            enrolledStudents.add(s);
+        }
+    }
+
+    return enrolledStudents;
+}
+
+
 }
