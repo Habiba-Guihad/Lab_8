@@ -9,6 +9,7 @@ package lab_8;
  * @author Gehad
  */
 
+import java.util.ArrayList;
 import javax.swing.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -76,27 +77,24 @@ public class InstructorViewInsightsFrame extends javax.swing.JFrame {
     }
 
     private void refreshCharts() {
-        String selectedCourseTitle = (String) courseComboBox.getSelectedItem();
-        if (selectedCourseTitle == null) return;
+    String selectedCourseTitle = (String) courseComboBox.getSelectedItem();
+    if (selectedCourseTitle == null) return;
 
-        Course selectedCourse = getCourseByTitle(selectedCourseTitle);
-        if (selectedCourse == null) return;
+    Course selectedCourse = getCourseByTitle(selectedCourseTitle);
+    if (selectedCourse == null) return;
 
-        List<String> enrolledStudentIds =
-                instructor.viewEnrolledStudents(courseManager, selectedCourse.getCourseId());
+    // Get the list of Student objects directly
+    ArrayList<Student> students = instructor.viewEnrolledStudents(courseManager, selectedCourse.getCourseId());
 
-        if (enrolledStudentIds == null || enrolledStudentIds.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No students enrolled in this course.");
-            return;
-        }
-
-        List<Student> students = enrolledStudentIds.stream()
-                .map(id -> dbManager.getStudentById(id))
-                .filter(s -> s != null)
-                .collect(Collectors.toList());
-
-        chartFrame.updateCharts(selectedCourse, students, instructor);
+    if (students.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No students enrolled in this course.");
+        return;
     }
+
+    // Update charts using the list of Student objects
+    chartFrame.updateCharts(selectedCourse, students, instructor);
+}
+
 
     private Course getCourseByTitle(String title) {
         List<Course> instructorCourses = courseManager.getCoursesByInstructor(instructor.getUserId());

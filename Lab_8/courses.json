@@ -1,156 +1,29 @@
 [
     {
-        "approvalStatus": "PENDING",
+        "approvalStatus": "APPROVED",
         "description": "",
-        "students": [
-            "0139f984-c154-4c5d-aba9-e2da45cd7363",
-            "e7ea2303-a3d1-4444-b605-f26448efad2d"
-        ],
-        "title": "prog",
+        "students": [],
+        "title": "ttttt",
         "courseId": "C1",
-        "instructorId": "7bdf7c21-4c3c-4ef9-af52-27e93d759877",
-        "lessons": [
-            {
-                "quiz": {
-                    "questions": [
-                        {
-                            "options": [
-                                "2",
-                                "1",
-                                "3"
-                            ],
-                            "correctIndex": 0,
-                            "questionText": "1+1"
-                        },
-                        {
-                            "options": [
-                                "1",
-                                "3",
-                                "4"
-                            ],
-                            "correctIndex": 2,
-                            "questionText": "2+2"
-                        }
-                    ],
-                    "passingScore": 0,
-                    "title": "heyy"
-                },
-                "lessonId": "L1",
-                "title": "OOP",
-                "content": ""
-            },
-            {
-                "lessonId": "L2",
-                "title": "java",
-                "content": ""
-            },
-            {
-                "lessonId": "L3",
-                "title": "SOLID",
-                "content": ""
-            }
-        ]
+        "instructorId": "5da76081-4501-4235-a2f8-d657a41b0694",
+        "lessons": []
     },
     {
-        "approvalStatus": "PENDING",
+        "approvalStatus": "APPROVED",
         "description": "",
-        "students": [
-            "0139f984-c154-4c5d-aba9-e2da45cd7363",
-            "e7ea2303-a3d1-4444-b605-f26448efad2d",
-            "90b262a0-0cb9-4873-8727-f2c25ea3f534"
-        ],
-        "title": "math",
+        "students": [],
+        "title": "mmmm",
         "courseId": "C2",
-        "instructorId": "7bdf7c21-4c3c-4ef9-af52-27e93d759877",
-        "lessons": [
-            {
-                "lessonId": "L1",
-                "title": "Diff",
-                "content": ""
-            },
-            {
-                "lessonId": "L2",
-                "title": "int",
-                "content": ""
-            }
-        ]
+        "instructorId": "5da76081-4501-4235-a2f8-d657a41b0694",
+        "lessons": []
     },
     {
-        "approvalStatus": "PENDING",
+        "approvalStatus": "APPROVED",
         "description": "",
-        "students": ["90b262a0-0cb9-4873-8727-f2c25ea3f534"],
-        "title": "physics",
+        "students": [],
+        "title": "ooo",
         "courseId": "C3",
-        "instructorId": "7bdf7c21-4c3c-4ef9-af52-27e93d759877",
-        "lessons": []
-    },
-    {
-        "approvalStatus": "PENDING",
-        "description": "",
-        "students": [],
-        "title": "a",
-        "courseId": "C4",
-        "instructorId": "25f8aad0-a010-4bc0-b34a-bcdd35045a31",
-        "lessons": [
-            {
-                "quiz": {
-                    "questions": [{
-                        "options": [
-                            "h.a",
-                            "h.b",
-                            "h.c"
-                        ],
-                        "correctIndex": 0,
-                        "questionText": "1"
-                    }],
-                    "passingScore": 0,
-                    "title": "a1.1"
-                },
-                "lessonId": "L1",
-                "title": "a1",
-                "content": ""
-            },
-            {
-                "lessonId": "L2",
-                "title": "a2",
-                "content": ""
-            }
-        ]
-    },
-    {
-        "approvalStatus": "PENDING",
-        "description": "",
-        "students": [],
-        "title": "b",
-        "courseId": "C5",
-        "instructorId": "25f8aad0-a010-4bc0-b34a-bcdd35045a31",
-        "lessons": []
-    },
-    {
-        "approvalStatus": "PENDING",
-        "description": "1",
-        "students": [],
-        "title": "hana1",
-        "courseId": "C6",
-        "instructorId": "bca7898a-2477-4763-a614-74afa8078a46",
-        "lessons": []
-    },
-    {
-        "approvalStatus": "PENDING",
-        "description": "2",
-        "students": [],
-        "title": "hana2",
-        "courseId": "C7",
-        "instructorId": "bca7898a-2477-4763-a614-74afa8078a46",
-        "lessons": []
-    },
-    {
-        "approvalStatus": "PENDING",
-        "description": "3",
-        "students": [],
-        "title": "hana3",
-        "courseId": "C8",
-        "instructorId": "bca7898a-2477-4763-a614-74afa8078a46",
+        "instructorId": "5da76081-4501-4235-a2f8-d657a41b0694",
         "lessons": []
     }
 ]

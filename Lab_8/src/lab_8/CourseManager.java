@@ -8,8 +8,7 @@ package lab_8;
  *
  * @author New Eng
  */
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CourseManager {
@@ -19,7 +18,7 @@ public class CourseManager {
     public CourseManager(JsonDatabaseManager db) {
         this.db = db;
     }
-    
+
     public JsonDatabaseManager getDbManager() {
         return db;
     }
@@ -33,13 +32,12 @@ public class CourseManager {
         if (title == null || title.trim().isEmpty())
             return null;
 
-        ArrayList<Course> courses = db.getCourses();
-
         Course c = new Course(generateCourseId(), title, description, instructorId);
         c.setApprovalStatus(Course.ApprovalStatus.PENDING);
 
-        courses.add(c);
+        db.getCourses().add(c);
         db.saveCourses();
+        db.saveUsers();
         return c;
     }
 
@@ -59,12 +57,11 @@ public class CourseManager {
     }
 
     public boolean deleteCourse(String id) {
-        ArrayList<Course> courses = db.getCourses();
         Course c = getCourse(id);
         if (c == null)
             return false;
 
-        courses.remove(c);
+        db.getCourses().remove(c);
         db.saveCourses();
         return true;
     }
@@ -72,7 +69,7 @@ public class CourseManager {
     public Course getCourse(String id) {
         for (Course c : db.getCourses()) {
             if (c.getCourseId().equals(id))
-                return c;  
+                return c;
         }
         return null;
     }
@@ -87,12 +84,29 @@ public class CourseManager {
                 .collect(Collectors.toList());
     }
 
+    // ---------------------------------------------------------
+    // THE CRITICAL FIX — Add course to instructor upon approval
+    // ---------------------------------------------------------
     public boolean approveCourse(String courseId) {
         Course c = getCourse(courseId);
         if (c == null)
             return false;
 
         c.setApprovalStatus(Course.ApprovalStatus.APPROVED);
+
+        // Find the instructor and update createdCourses
+        for (User u : db.getUsers()) {
+            if (u instanceof Instructor ins && ins.getUserId().equals(c.getInstructorId())) {
+
+                if (!ins.getCreatedCourses().contains(courseId)) {
+                    ins.getCreatedCourses().add(courseId);
+                }
+
+                db.saveUsers();
+                break;
+            }
+        }
+
         db.saveCourses();
         return true;
     }

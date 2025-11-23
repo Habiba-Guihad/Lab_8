@@ -201,6 +201,7 @@ public void saveUsers() {
         }
 
         if (u instanceof Instructor ins) {
+            System.out.println(ins.getCreatedCourses());
             JSONArray createdCoursesArr = new JSONArray(ins.getCreatedCourses());
             obj.put("createdCourses", createdCoursesArr);
 

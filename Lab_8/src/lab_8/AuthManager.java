@@ -12,6 +12,9 @@ public class AuthManager {
 
     private JsonDatabaseManager database = new JsonDatabaseManager();
 
+    public AuthManager() {
+    }
+
     public AuthResult login(String email, String password) {
         User user = database.findUserByEmail(email);
 

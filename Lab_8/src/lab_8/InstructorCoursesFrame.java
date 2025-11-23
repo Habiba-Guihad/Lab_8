@@ -200,13 +200,16 @@ for (int row = 0; row < rowCount; row++) {
         if (newCourse != null) {
             // Update instructor's created courses
             if (!instructor.getCreatedCourses().contains(newCourse.getCourseId())) {
-                instructor.getCreatedCourses().add(newCourse.getCourseId());
+                  instructor.addCourse(courseManager, titleCell, description) ;
+
             }
 
             // Update table with generated course ID
             tableModel.setValueAt(newCourse.getCourseId(), row, 0);
 
             // Save instructor changes to JSON
+
+            dbManager.saveCourses();
             dbManager.saveUsers();
 
             added = true;
