@@ -187,5 +187,63 @@
         "courseId": "C5",
         "instructorId": "10abef3b-5e35-46c3-a5e3-87596f0fbb3d",
         "lessons": []
+    },
+    {
+        "approvalStatus": "PENDING",
+        "description": "",
+        "students": ["9433876e-e479-4619-b642-14748be4fa57"],
+        "title": "h",
+        "courseId": "C6",
+        "instructorId": "8beecf8a-351a-433e-b920-2c7b9205f5dc",
+        "lessons": [
+            {
+                "quiz": {
+                    "questions": [],
+                    "passingScore": 0,
+                    "title": "h1.1"
+                },
+                "lessonId": "L1",
+                "title": "h1",
+                "content": ""
+            },
+            {
+                "quiz": {
+                    "questions": [
+                        {
+                            "options": [
+                                "a",
+                                "b",
+                                "c"
+                            ],
+                            "correctIndex": 0,
+                            "questionText": "1"
+                        },
+                        {
+                            "options": [
+                                "a",
+                                "b",
+                                "c"
+                            ],
+                            "correctIndex": 0,
+                            "questionText": "2"
+                        }
+                    ],
+                    "passingScore": 0,
+                    "title": "h2.2"
+                },
+                "lessonId": "L2",
+                "title": "h2",
+                "content": ""
+            }
+        ]
+    },
+    {
+        "approvalStatus": "PENDING",
+        "description": "aa",
+        "students": [],
+        "title": "a",
+        "courseId": "C7",
+        "instructorId": "8beecf8a-351a-433e-b920-2c7b9205f5dc",
+        "lessons": []
     }
 ]

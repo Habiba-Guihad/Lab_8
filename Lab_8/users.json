@@ -43,12 +43,14 @@
         "enrolledCourses": [
             3,
             2,
-            4
+            4,
+            6
         ],
         "progress": {
             "2": ["L1"],
             "3": ["L2"],
-            "4": ["L1"]
+            "4": ["L1"],
+            "6": ["L2"]
         },
         "userId": "9433876e-e479-4619-b642-14748be4fa57",
         "email": "h@g",
@@ -102,5 +104,13 @@
         "email": "hh@h",
         "passwordHash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
         "username": "h"
+    },
+    {
+        "role": "instructor",
+        "createdCourses": [],
+        "userId": "8beecf8a-351a-433e-b920-2c7b9205f5dc",
+        "email": "y@",
+        "passwordHash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "y"
     }
 ]

@@ -125,48 +125,6 @@ private void updateCreateQuizButtonState() {
 
     boolean enable = courseId != null && lessonId != null && !title.isEmpty();
     createQuizButton.setEnabled(enable);
-    String quizTitle = quizTitleField.getText().trim();
-System.out.println("CourseId = " + courseId);
-    System.out.println("LessonId = " + lessonId);
-    System.out.println("QuizTitle = " + quizTitle);
-
-    Course course = courseManager.getCourse(courseId);
-    System.out.println("Course found? " + (course != null));
-
-    Lesson lesson = lessonManager.getLesson(course, lessonId);
-    System.out.println("Lesson found? " + (lesson != null));
-
-    boolean created = instructor.addQuiz(lessonManager, courseManager,
-            courseId, lessonId, quizTitle, 0, new ArrayList<>());
-    
-    System.out.println("Created = " + created);
-    if (courseId == null || lessonId == null || quizTitle.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            "Select course, lesson, and enter quiz title.");
-        return;
-    }
-
-    if (created) {
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            "Quiz created! Now you can add questions.");
-
-        // Open InstructorAddQuestionsFrame
-        InstructorAddQuestionsFrame addQuestionsFrame = new InstructorAddQuestionsFrame(
-            instructor, 
-            courseManager, 
-            lessonManager, 
-            courseId, 
-            lessonId, 
-            quizTitle
-        );
-        addQuestionsFrame.setVisible(true);
-
-        // Optionally, close this frame if you want
-        // this.dispose();
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            "Failed to create quiz. Check your selections.");
-    }
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -284,7 +242,9 @@ System.out.println("CourseId = " + courseId);
     boolean created = instructor.addQuiz(lessonManager,courseManager,courseId, lessonId, quizTitle, 0, new ArrayList<>());
 
     if (created) {
-        JOptionPane.showMessageDialog(this, "Quiz created! Now you can add questions.");
+        InstructorAddQuestionsFrame addQuestionsFrame = new InstructorAddQuestionsFrame(instructor, courseManager, lessonManager, courseId, lessonId, quizTitle);//*
+      addQuestionsFrame.setVisible(true);
+        this.dispose();
         // TODO: Open InstructorAddQuestionsFrame here
     } else {
         JOptionPane.showMessageDialog(this, "Failed to create quiz. Check your selections.");
