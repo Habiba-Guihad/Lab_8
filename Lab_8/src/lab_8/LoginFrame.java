@@ -9,15 +9,12 @@ import javax.swing.*;
  * @author Dell
  */
 public class LoginFrame extends javax.swing.JFrame {
-    private JsonDatabaseManager db;
-    private AuthManager authmanager;
+    private AuthManager authmanager=new AuthManager();
     /**
      * Creates new form LoginFrame
      */
     public LoginFrame() {
         initComponents();
-         db = new JsonDatabaseManager();
-    authmanager = new AuthManager(db);
         jLabel5.setText("");
         setLocationRelativeTo(null);
     }
@@ -144,9 +141,8 @@ public class LoginFrame extends javax.swing.JFrame {
              jLabel5.setText("Please fill all fields");
              return;
         }
-        //AuthManager auth=new AuthManager();
-        //AuthResult result=auth.login(email,password);
-        AuthResult result = authmanager.login(email, password);//*
+        AuthManager auth=new AuthManager();
+        AuthResult result=auth.login(email,password);
          if (!result.isSuccess()) {
         jLabel5.setText(result.getMessage());
         return;
@@ -159,9 +155,9 @@ public class LoginFrame extends javax.swing.JFrame {
             new InstructorDashboardFrame(user).setVisible(true);
         }
         else if(user.getRole()==Role.ADMIN){
-            JsonDatabaseManager db=new JsonDatabaseManager();
-            CourseManager cm=new CourseManager(db);
-            new AdminFrame(cm,db).setVisible(true);
+           JsonDatabaseManager db=new JsonDatabaseManager();
+           CourseManager cm=new CourseManager(db);
+           new AdminFrame(cm,db).setVisible(true);
         }
         else
             JOptionPane.showMessageDialog(this,"unknown role");
