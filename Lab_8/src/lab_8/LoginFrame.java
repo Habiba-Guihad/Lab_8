@@ -9,10 +9,11 @@ import javax.swing.*;
  * @author Dell
  */
 public class LoginFrame extends javax.swing.JFrame {
-  private AuthManager authmanager=new AuthManager();
+    private AuthManager authmanager=new AuthManager();
     /**
      * Creates new form LoginFrame
      */
+    //b
     public LoginFrame() {
         initComponents();
         jLabel5.setText("");
@@ -151,9 +152,16 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel5.setText("Login Successfully");
         if(user.getRole()==Role.STUDENT){
              new StudentDashboardFrame(user).setVisible(true);
-        } else {
+        } else if(user.getRole()==Role.INSTRUCTOR) {
             new InstructorDashboardFrame(user).setVisible(true);
         }
+        else if(user.getRole()==Role.ADMIN){
+           JsonDatabaseManager db=new JsonDatabaseManager();
+           CourseManager cm=new CourseManager(db);
+           new AdminFrame(cm,db).setVisible(true);
+        }
+        else
+            JOptionPane.showMessageDialog(this,"unknown role");
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
