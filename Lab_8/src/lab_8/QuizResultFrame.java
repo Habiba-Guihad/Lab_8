@@ -25,7 +25,7 @@ public class QuizResultFrame extends javax.swing.JFrame {
     public QuizResultFrame(Student student,Course course,Quiz quiz, int score) {
         initComponents();
         this.student = student;
-        this.selectedCourse = course;
+        this.selectedcourse = course;
         this.quiz = quiz;
         this.score = score;
         this.student=student;
