@@ -198,10 +198,12 @@ import javax.swing.table.DefaultTableModel;
     /**
      * @param args the command line arguments
      */
-     public static void main(String[] args) {
-        new Adminframe().setVisible(true);
-    }  
-    
+    public static void main(String[] args) {
+    JsonDatabaseManager db = new JsonDatabaseManager();
+    CourseManager cm = new CourseManager(db);
+     new Adminframe(cm, db).setVisible(true);
+
+   }  
     private JTable courseTable;
     private JScrollPane tableScroll;
     private JButton approveBtn;
