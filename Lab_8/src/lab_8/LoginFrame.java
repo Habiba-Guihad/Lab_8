@@ -13,6 +13,7 @@ public class LoginFrame extends javax.swing.JFrame {
     /**
      * Creates new form LoginFrame
      */
+    //b
     public LoginFrame() {
         initComponents();
         jLabel5.setText("");
