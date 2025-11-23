@@ -22,14 +22,14 @@ public class TakeQuizFrame extends javax.swing.JFrame {
     private String courseId;
     public TakeQuizFrame(String studentId,String courseId,Quiz quiz) {
         initComponents();
-         this.studentId = studentId;//*
-         this.courseId = courseId;//*
+         this.studentId = studentId;
+         this.courseId = courseId;
          this.quiz=quiz;
-          if (quiz == null || quiz.getQuestions() == null || quiz.getQuestions().isEmpty()) {//*
+          if (quiz == null || quiz.getQuestions() == null || quiz.getQuestions().isEmpty()) {
         JOptionPane.showMessageDialog(this, "Quiz not found or empty!");
         this.dispose();
         return;
-         }//*
+         }
         
         jLabel1.setText(quiz.getTitle());
         btnSubmit.setVisible(false);

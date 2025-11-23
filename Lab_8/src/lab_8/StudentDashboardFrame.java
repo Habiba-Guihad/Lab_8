@@ -458,12 +458,12 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
     }
        
        Quiz quiz=selectedLesson.getQuiz();
-       if(quiz==null){
+       if(quiz==null|| quiz.getQuestions() == null || quiz.getQuestions().isEmpty()){
            JOptionPane.showMessageDialog(this,"This lesson has no quiz");
            return;
        }
-       System.out.println("Quiz title: " + quiz.getTitle());
-      System.out.println("Number of questions: " + quiz.getQuestions().size());
+     //  System.out.println("Quiz title: " + quiz.getTitle());
+      //System.out.println("Number of questions: " + quiz.getQuestions().size());
 
        String studentId=student.getUserId();
        String courseId=selectedCourse.getCourseId();
