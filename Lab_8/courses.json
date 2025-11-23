@@ -82,5 +82,47 @@
         "courseId": "C3",
         "instructorId": "7bdf7c21-4c3c-4ef9-af52-27e93d759877",
         "lessons": []
+    },
+    {
+        "approvalStatus": "PENDING",
+        "description": "",
+        "students": [],
+        "title": "a",
+        "courseId": "C4",
+        "instructorId": "25f8aad0-a010-4bc0-b34a-bcdd35045a31",
+        "lessons": [
+            {
+                "quiz": {
+                    "questions": [{
+                        "options": [
+                            "h.a",
+                            "h.b",
+                            "h.c"
+                        ],
+                        "correctIndex": 0,
+                        "questionText": "1"
+                    }],
+                    "passingScore": 0,
+                    "title": "a1.1"
+                },
+                "lessonId": "L1",
+                "title": "a1",
+                "content": ""
+            },
+            {
+                "lessonId": "L2",
+                "title": "a2",
+                "content": ""
+            }
+        ]
+    },
+    {
+        "approvalStatus": "PENDING",
+        "description": "",
+        "students": [],
+        "title": "b",
+        "courseId": "C5",
+        "instructorId": "25f8aad0-a010-4bc0-b34a-bcdd35045a31",
+        "lessons": []
     }
 ]

@@ -9,12 +9,15 @@ import javax.swing.*;
  * @author Dell
  */
 public class LoginFrame extends javax.swing.JFrame {
-  private AuthManager authmanager=new AuthManager();
+    private JsonDatabaseManager db;
+    private AuthManager authmanager;
     /**
      * Creates new form LoginFrame
      */
     public LoginFrame() {
         initComponents();
+         db = new JsonDatabaseManager();
+    authmanager = new AuthManager(db);
         jLabel5.setText("");
         setLocationRelativeTo(null);
     }
@@ -141,8 +144,9 @@ public class LoginFrame extends javax.swing.JFrame {
              jLabel5.setText("Please fill all fields");
              return;
         }
-        AuthManager auth=new AuthManager();
-        AuthResult result=auth.login(email,password);
+        //AuthManager auth=new AuthManager();
+        //AuthResult result=auth.login(email,password);
+        AuthResult result = authmanager.login(email, password);//*
          if (!result.isSuccess()) {
         jLabel5.setText(result.getMessage());
         return;
@@ -151,9 +155,16 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel5.setText("Login Successfully");
         if(user.getRole()==Role.STUDENT){
              new StudentDashboardFrame(user).setVisible(true);
-        } else {
+        } else if(user.getRole()==Role.INSTRUCTOR) {
             new InstructorDashboardFrame(user).setVisible(true);
         }
+        else if(user.getRole()==Role.ADMIN){
+            JsonDatabaseManager db=new JsonDatabaseManager();
+            CourseManager cm=new CourseManager(db);
+            new AdminFrame(cm,db).setVisible(true);
+        }
+        else
+            JOptionPane.showMessageDialog(this,"unknown role");
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
