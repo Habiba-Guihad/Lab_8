@@ -52,7 +52,7 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
         this.setVisible(true);
     }
      
-     public StudentDashboardFrame() {   // bla
+     public StudentDashboardFrame() {  
     this(new Student(
             "0",                // fake ID
             "Test Student",     // fake name
@@ -347,7 +347,7 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
 
     List<Course> availableCourses = (List<Course>) listAvailable.getClientProperty("courses");
     Course selectedCourse = availableCourses.get(index);//*
-     Student realStudent = null;//*
+     Student realStudent = null;
     for (User u : db.getUsers()) {
         if (u instanceof Student s && s.getUserId().equals(student.getUserId())) {
             realStudent = s;
@@ -368,7 +368,7 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
     if (realCourse == null) {
         JOptionPane.showMessageDialog(this, "Error: Course not found in database!");
         return;
-    }//*
+    }
     int courseIdInt = Integer.parseInt(realCourse.getCourseId().replaceAll("\\D", ""));
     if (!realStudent.getEnrolledCourses().contains(courseIdInt)) {
         realStudent.getEnrolledCourses().add(courseIdInt);
@@ -399,21 +399,12 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
     Lesson selectedLesson = lessons.get(lessonIndex);
 
     int courseIdInt = Integer.parseInt(selectedCourse.getCourseId().replaceAll("\\D", ""));
-   // student.getProgress().putIfAbsent(courseIdInt, new ArrayList<>());
-    //List<String> completed = student.getProgress().get(courseIdInt);
-    student.completeLesson(courseIdInt, selectedLesson.getLessonId());//*
+    student.completeLesson(courseIdInt, selectedLesson.getLessonId());
     db.saveUsers();//*
     listEnrolledValueChanged(null);//*
-    //if (!completed.contains(selectedLesson.getLessonId())) {
-      //  completed.add(selectedLesson.getLessonId());
-       // db.saveUsers();
-        // refresh lessons list
-       // listEnrolledValueChanged(null);
-   // }
     if (student.hasCompletedCourse(selectedCourse))
     {
-   // int cId = Integer.parseInt(selectedCourse.getCourseId().replaceAll("\\D", ""));
-    student.awardCertificate(courseIdInt);//replaced bet brackets by cId
+    student.awardCertificate(courseIdInt);
     Certificate cert = student.getCertificates().get(student.getCertificates().size() - 1);
     db.generateCertificatePDF(student, selectedCourse, cert);
     db.saveUsers();
@@ -471,8 +462,8 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(this,"This lesson has no quiz");
            return;
        }
-       System.out.println("Quiz title: " + quiz.getTitle());//*
-      System.out.println("Number of questions: " + quiz.getQuestions().size());//*
+       System.out.println("Quiz title: " + quiz.getTitle());
+      System.out.println("Number of questions: " + quiz.getQuestions().size());
 
        String studentId=student.getUserId();
        String courseId=selectedCourse.getCourseId();

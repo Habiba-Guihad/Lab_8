@@ -8,6 +8,11 @@
         "instructorId": "d383688b-8cc2-40c4-a921-bdaed019cb67",
         "lessons": [
             {
+                "quiz": {
+                    "questions": [],
+                    "passingScore": 0,
+                    "title": ""
+                },
                 "lessonId": "L1",
                 "title": "java",
                 "content": "w"
@@ -36,6 +41,11 @@
         "instructorId": "d383688b-8cc2-40c4-a921-bdaed019cb67",
         "lessons": [
             {
+                "quiz": {
+                    "questions": [],
+                    "passingScore": 0,
+                    "title": ""
+                },
                 "lessonId": "L1",
                 "title": "Diff",
                 "content": ""
@@ -43,6 +53,35 @@
             {
                 "lessonId": "L2",
                 "title": "Int",
+                "content": ""
+            },
+            {
+                "quiz": {
+                    "questions": [
+                        {
+                            "options": [
+                                "+",
+                                "-",
+                                "="
+                            ],
+                            "correctIndex": 0,
+                            "questionText": "1"
+                        },
+                        {
+                            "options": [
+                                "+",
+                                "*",
+                                "/"
+                            ],
+                            "correctIndex": 0,
+                            "questionText": "2"
+                        }
+                    ],
+                    "passingScore": 0,
+                    "title": "m1"
+                },
+                "lessonId": "L3",
+                "title": "add",
                 "content": ""
             }
         ]

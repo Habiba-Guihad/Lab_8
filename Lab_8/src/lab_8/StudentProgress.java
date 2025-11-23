@@ -74,20 +74,6 @@ public class StudentProgress {
     }
 
     public double getAverageScoreForQuiz(Quiz quiz) {
-        //List<QuizAttempt> list =new ArrayList<>();
-        //for (QuizAttempt a :attempts) {
-        //     if (a.getQuiz().equals(quiz)) {
-         //        list.add(a);
-         //    }
-       // }
-        //if (list.isEmpty()) 
-        //    return 0;
-        //double sum = 0;
-        //for (QuizAttempt a : list) {
-         //    sum += a.getScore();
-      //  }    
-        //return sum / list.size();
-       // }  
        double sum = 0;
         int count = 0;
 

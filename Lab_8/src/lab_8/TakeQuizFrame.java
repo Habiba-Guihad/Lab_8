@@ -40,13 +40,11 @@ public class TakeQuizFrame extends javax.swing.JFrame {
     initComponents();
 }
 public void loadQuestion(){
-   if (quiz == null || quiz.getQuestions() == null || currentIndex >= quiz.getQuestions().size()){//*
+   if (quiz == null || quiz.getQuestions() == null || currentIndex >= quiz.getQuestions().size()){
         btnNext.setVisible(false);
         btnSubmit.setVisible(false);
-       return;// prevents IndexOutOfBounds//*
+       return;// prevents IndexOutOfBounds
    }
-    //*btnNext.setVisible(true);
-    //*btnSubmit.setVisible(false);
     Question q=quiz.getQuestions().get(currentIndex);
     jLabel2.setText((currentIndex+1) + "." + q.getQuestionText());
      List<String> opts = q.getOptions();//*
@@ -57,17 +55,6 @@ public void loadQuestion(){
     choiceGroup.clearSelection();
     btnNext.setVisible(currentIndex < quiz.getQuestions().size() - 1);
     btnSubmit.setVisible(currentIndex == quiz.getQuestions().size() - 1);
-    //jRadioButton1.setText(q.getOptions().get(0));
-    //jRadioButton2.setText(q.getOptions().get(1));
-    //jRadioButton3.setText(q.getOptions().get(2));
-    //jRadioButton4.setText(q.getOptions().get(3));
-    //choiceGroup.clearSelection();
-    //btnNext.setVisible(currentIndex < quiz.getQuestions().size() - 1);
-    //btnSubmit.setVisible(currentIndex == quiz.getQuestions().size() - 1);
-    //if(currentIndex==quiz.getQuestions().size()-1){
-       // btnNext.setVisible(false);
-      //  btnSubmit.setVisible(true);
-    //}
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -196,19 +183,6 @@ public void loadQuestion(){
         userAnswers.add(selected);
        currentIndex++;
        loadQuestion();
-      //  if (currentIndex < quiz.getQuestions().size()) {//*
-      //  userAnswers.add(selected);//*
-    //}//*
-    //     currentIndex++;
-    //if (currentIndex < quiz.getQuestions().size()) {
-     //   loadQuestion();
-    //} else { currentIndex = quiz.getQuestions().size() - 1;
-     //   btnNext.setVisible(false);
-     //   btnSubmit.setVisible(true);
-    //}//*
-       // userAnswers.add(selected);
-       // currentIndex++;
-       // loadQuestion();
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed

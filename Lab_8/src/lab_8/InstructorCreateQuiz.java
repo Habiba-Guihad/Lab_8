@@ -146,8 +146,6 @@ System.out.println("CourseId = " + courseId);
         return;
     }
 
-   // boolean created = instructor.addQuiz(lessonManager, courseManager, courseId, lessonId, quizTitle, 0, new java.util.ArrayList<>());
-
     if (created) {
         javax.swing.JOptionPane.showMessageDialog(this, 
             "Quiz created! Now you can add questions.");
@@ -170,12 +168,6 @@ System.out.println("CourseId = " + courseId);
             "Failed to create quiz. Check your selections.");
     }
 }
-
-
-
-
-
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
