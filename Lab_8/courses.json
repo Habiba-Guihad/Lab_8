@@ -2,16 +2,20 @@
     {
         "approvalStatus": "APPROVED",
         "description": "",
-        "students": [],
+        "students": ["ae415c07-3e08-47c9-83dc-8b50ce1088dc"],
         "title": "ttttt",
         "courseId": "C1",
         "instructorId": "5da76081-4501-4235-a2f8-d657a41b0694",
-        "lessons": []
+        "lessons": [{
+            "lessonId": "L1",
+            "title": "hhh",
+            "content": ""
+        }]
     },
     {
         "approvalStatus": "APPROVED",
         "description": "",
-        "students": [],
+        "students": ["ae415c07-3e08-47c9-83dc-8b50ce1088dc"],
         "title": "mmmm",
         "courseId": "C2",
         "instructorId": "5da76081-4501-4235-a2f8-d657a41b0694",
@@ -52,5 +56,51 @@
         "courseId": "C6",
         "instructorId": "3d8e43f7-2a09-44ec-8a73-699579a7f9b1",
         "lessons": []
+    },
+    {
+        "approvalStatus": "PENDING",
+        "description": "",
+        "students": [],
+        "title": "data",
+        "courseId": "C7",
+        "instructorId": "5da76081-4501-4235-a2f8-d657a41b0694",
+        "lessons": []
+    },
+    {
+        "approvalStatus": "APPROVED",
+        "description": "",
+        "students": ["ae415c07-3e08-47c9-83dc-8b50ce1088dc"],
+        "title": "gggg",
+        "courseId": "C8",
+        "instructorId": "5da76081-4501-4235-a2f8-d657a41b0694",
+        "lessons": [{
+            "quiz": {
+                "questions": [
+                    {
+                        "options": [
+                            "1",
+                            "2",
+                            "3"
+                        ],
+                        "correctIndex": 1,
+                        "questionText": "1+1"
+                    },
+                    {
+                        "options": [
+                            "4",
+                            "5",
+                            "7"
+                        ],
+                        "correctIndex": 0,
+                        "questionText": "2+2"
+                    }
+                ],
+                "passingScore": 0,
+                "title": "hhh"
+            },
+            "lessonId": "L1",
+            "title": "c3",
+            "content": ""
+        }]
     }
 ]

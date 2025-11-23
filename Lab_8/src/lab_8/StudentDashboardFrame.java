@@ -18,6 +18,7 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
     private Student student;
     private CourseManager courseManager;
     private JsonDatabaseManager db;
+    private QuizManager manager=new QuizManager();
    
     /**
      * Creates new form StudentDashboardFrame
@@ -488,7 +489,7 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
 
 //       String studentId=student.getUserId();
 //       String courseId=selectedCourse.getCourseId();
-       TakeQuizFrame qf=new TakeQuizFrame(student,selectedCourse,quiz, db);
+       TakeQuizFrame qf=new TakeQuizFrame(student,selectedCourse,quiz, db,manager);
        qf.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_btnTakeQuizActionPerformed

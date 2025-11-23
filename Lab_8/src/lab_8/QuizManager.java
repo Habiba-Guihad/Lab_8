@@ -43,7 +43,7 @@ public class QuizManager {
 
     public void addAttempt(QuizAttempt attempt) {
         attempts.add(attempt);
-    }
+           }
 
     public StudentProgress getStudentProgress(String studentId) {
         return studentProgressMap.get(studentId);
