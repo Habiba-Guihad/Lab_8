@@ -56,7 +56,8 @@
         "description": "",
         "students": [
             "0139f984-c154-4c5d-aba9-e2da45cd7363",
-            "e7ea2303-a3d1-4444-b605-f26448efad2d"
+            "e7ea2303-a3d1-4444-b605-f26448efad2d",
+            "90b262a0-0cb9-4873-8727-f2c25ea3f534"
         ],
         "title": "math",
         "courseId": "C2",
@@ -77,7 +78,7 @@
     {
         "approvalStatus": "PENDING",
         "description": "",
-        "students": [],
+        "students": ["90b262a0-0cb9-4873-8727-f2c25ea3f534"],
         "title": "physics",
         "courseId": "C3",
         "instructorId": "7bdf7c21-4c3c-4ef9-af52-27e93d759877",

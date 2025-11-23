@@ -1,6 +1,7 @@
 package lab_8;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 /*
@@ -128,7 +129,39 @@ public boolean hasCompletedCourse(Course course) {
     ArrayList<String> completedLessons = progress.get(courseId);
     return completedLessons != null && completedLessons.size() >= course.getLessons().size();
 }
+public boolean hasCertificateForCourse(int courseId) {   //halla added
+    if (certificates == null) return false;
+    for (Certificate c : certificates) {
+        if (c.getCourseId() == courseId) return true;
+    }
+    return false;
+}
+public boolean hasCompletedEverything(Course course) {
+    int courseIdInt = Integer.parseInt(course.getCourseId().replaceAll("\\D", ""));
 
+    List<Lesson> lessons = course.getLessons();
+    List<String> completedLessons = this.getProgress().get(courseIdInt);
+
+    if (completedLessons == null) return false;
+
+    // 1️⃣ All lessons must be marked completed
+    for (Lesson lesson : lessons) {
+        if (!completedLessons.contains(lesson.getLessonId()))
+            return false;
+    }
+
+    // 2️⃣ All lesson quizzes must be passed
+    for (Lesson lesson : lessons) {
+        Quiz q = lesson.getQuiz();
+        if (q == null) return false;
+
+        Integer attemptScore = this.getQuizScore(courseIdInt, lesson.getLessonId());
+        if (attemptScore == null) return false;
+        if (!q.isPassed(attemptScore)) return false;
+    }
+
+    return true;
+}
 // ---------- QUIZ METHODS ----------
 public void addQuizScore(int courseId, Quiz quiz, int score) {
     // update latest score

@@ -67,5 +67,29 @@
         "email": "g@g",
         "passwordHash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
         "username": "g"
+    },
+    {
+        "role": "student",
+        "certificates": [],
+        "enrolledCourses": [
+            3,
+            2
+        ],
+        "quizScores": {},
+        "progress": {"2": [
+            "L1",
+            "L2"
+        ]},
+        "progressData": {
+            "completedLessons": {"2": [
+                "L1",
+                "L2"
+            ]},
+            "quizAttempts": []
+        },
+        "userId": "90b262a0-0cb9-4873-8727-f2c25ea3f534",
+        "email": "ghada@gmail",
+        "passwordHash": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+        "username": "ghada"
     }
 ]

@@ -420,6 +420,7 @@ public class JsonDatabaseManager {
         return null;
     }
 
+
     // --- generateCertificatePDF remains exactly as before ---
     public void generateCertificatePDF(Student student, Course course, Certificate cert) {
         try {

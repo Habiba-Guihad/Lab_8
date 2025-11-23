@@ -386,7 +386,29 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
         }
     }
     }//GEN-LAST:event_btnEnrollActionPerformed
-
+//private boolean hasCompletedEverything(Student student, Course course) {
+//    int courseId = Integer.parseInt(course.getCourseId().replaceAll("\\D", ""));
+//
+//    // 1️⃣ Check lessons
+//    ArrayList<String> completedLessons = student.getProgress().get(courseId);
+//    if (completedLessons == null || completedLessons.size() < course.getLessons().size()) {
+//        return false;
+//    }
+//
+//    // 2️⃣ Check quizzes
+//    ArrayList<Quiz> quizzes = db.getQuizzesForCourse(courseId);
+//    if (quizzes == null) return false;
+//
+//    for (Quiz q : quizzes) {
+//        Integer score = student.getQuizScore(courseId, q.getTitle());
+//        if (score == null || score < q.getPassingScore()) {
+//            return false;
+//        }
+//    }
+//
+//    // Everything completed
+//    return true;
+//}
     private void btnMarkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarkActionPerformed
        int lessonIndex = listLessons.getSelectedIndex();
     int courseIndex = listEnrolled.getSelectedIndex();
@@ -400,15 +422,16 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
 
     int courseIdInt = Integer.parseInt(selectedCourse.getCourseId().replaceAll("\\D", ""));
     student.completeLesson(courseIdInt, selectedLesson.getLessonId());
+    selectedLesson.setCompleted(true);
     db.saveUsers();//*
     listEnrolledValueChanged(null);//*
-    if (student.hasCompletedCourse(selectedCourse))
+    if (student.hasCompletedEverything(selectedCourse))
     {
     student.awardCertificate(courseIdInt);
     Certificate cert = student.getCertificates().get(student.getCertificates().size() - 1);
     db.generateCertificatePDF(student, selectedCourse, cert);
     db.saveUsers();
-    selectedLesson.setCompleted(true);
+    
     JOptionPane.showMessageDialog(this,
         " Congratulations! You completed this course, A certificate has been issued.");
     }
@@ -463,9 +486,9 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
            return;
        }
 
-       String studentId=student.getUserId();
-       String courseId=selectedCourse.getCourseId();
-       TakeQuizFrame qf=new TakeQuizFrame(studentId,courseId,quiz);
+//       String studentId=student.getUserId();
+//       String courseId=selectedCourse.getCourseId();
+       TakeQuizFrame qf=new TakeQuizFrame(student,selectedCourse,quiz, db);
        qf.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_btnTakeQuizActionPerformed

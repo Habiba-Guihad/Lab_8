@@ -20,11 +20,17 @@ public class TakeQuizFrame extends javax.swing.JFrame {
     private List<Integer> userAnswers=new ArrayList<>();
     private String studentId;
     private String courseId;
-    public TakeQuizFrame(String studentId,String courseId,Quiz quiz) {
+    private Student student;
+    private JsonDatabaseManager db;
+    private Course selectedCourse;
+    private int courseIdInt;
+    public TakeQuizFrame(Student student,Course course,Quiz quiz, JsonDatabaseManager db) {
         initComponents();
-         this.studentId = studentId;
-         this.courseId = courseId;
+         this.student= student;
+         this.selectedCourse = course;
          this.quiz=quiz;
+         this.db = db;
+         this.courseIdInt = Integer.parseInt(course.getCourseId().replaceAll("\\D", ""));
           if (quiz == null || quiz.getQuestions() == null || quiz.getQuestions().isEmpty()) {
         JOptionPane.showMessageDialog(this, "Quiz not found or empty!");
         this.dispose();
@@ -198,6 +204,20 @@ public void loadQuestion(){
         manager.saveAttempt(studentId, courseId, quiz, score);
         new QuizResultFrame(quiz, score).setVisible(true);
         new QuizReviewFrame(quiz, userAnswers).setVisible(true); 
+        if (student.hasCompletedEverything(selectedCourse)) {
+        student.awardCertificate(courseIdInt);
+
+        Certificate cert = student.getCertificates()
+                                  .get(student.getCertificates().size() - 1);
+
+        db.generateCertificatePDF(student, selectedCourse, cert);
+        db.saveUsers();
+
+        JOptionPane.showMessageDialog(null,
+            "🎉 Course completed! Certificate issued.");
+    }
+    //------------------------------------------------------------
+
         this.dispose();
     }//GEN-LAST:event_btnSubmitActionPerformed
     private int getSelectedChoice(){
