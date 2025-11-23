@@ -13,26 +13,27 @@ import javax.swing.JOptionPane;
  * @author Gehad
  */
 public class InstructorAddQuestionsFrame extends javax.swing.JFrame {
-private Instructor instructor;
-private JsonDatabaseManager dbManager = new JsonDatabaseManager();
-private CourseManager courseManager=new CourseManager(dbManager);
-private LessonManager lessonManager; 
-private String courseId;
-private String lessonId;
-private String quizTitle;
-    
-    public InstructorAddQuestionsFrame(Instructor instructor, CourseManager courseManager, 
-                                   LessonManager lessonManager, String courseId, 
-                                   String lessonId, String quizTitle) {
-    this.instructor = instructor;
-    this.courseManager = courseManager;
-    this.lessonManager = lessonManager;
-    this.courseId = courseId;
-    this.lessonId = lessonId;
-    this.quizTitle = quizTitle;
-    
-    initComponents(); 
-}
+
+    private Instructor instructor;
+    private JsonDatabaseManager dbManager = new JsonDatabaseManager();
+    private CourseManager courseManager = new CourseManager(dbManager);
+    private LessonManager lessonManager;
+    private String courseId;
+    private String lessonId;
+    private String quizTitle;
+
+    public InstructorAddQuestionsFrame(Instructor instructor, CourseManager courseManager,
+            LessonManager lessonManager, String courseId,
+            String lessonId, String quizTitle) {
+        this.instructor = instructor;
+        this.courseManager = courseManager;
+        this.lessonManager = lessonManager;
+        this.courseId = courseId;
+        this.lessonId = lessonId;
+        this.quizTitle = quizTitle;
+
+        initComponents();
+    }
 
     public InstructorAddQuestionsFrame() {
         initComponents();
@@ -195,94 +196,102 @@ private String quizTitle;
     }//GEN-LAST:event_radio1ActionPerformed
 
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
-                                                  
-    // Collect question data from text fields
-    String questionText = Questiontxt.getText().trim();
-    String choice1 = Choice1txt.getText().trim();
-    String choice2 = Choice2txt.getText().trim();
-    String choice3 = Choice3txt.getText().trim();
 
-    // Determine which radio button is selected (correct answer)
-    int correctIndex = -1;
-    if (radio1.isSelected()) correctIndex = 0;
-    else if (radio2.isSelected()) correctIndex = 1;
-    else if (radio3.isSelected()) correctIndex = 2;
+        // Collect question data from text fields
+        String questionText = Questiontxt.getText().trim();
+        String choice1 = Choice1txt.getText().trim();
+        String choice2 = Choice2txt.getText().trim();
+        String choice3 = Choice3txt.getText().trim();
 
-    if (questionText.isEmpty() || choice1.isEmpty() || choice2.isEmpty() || choice3.isEmpty() || correctIndex == -1) {
-        JOptionPane.showMessageDialog(this, "Please fill all fields and select the correct answer.");
-        return;
-    }
+        // Determine which radio button is selected (correct answer)
+        int correctIndex = -1;
+        if (radio1.isSelected()) {
+            correctIndex = 0;
+        } else if (radio2.isSelected()) {
+            correctIndex = 1;
+        } else if (radio3.isSelected()) {
+            correctIndex = 2;
+        }
 
-    // Create the Question object
-    List<String> options = new ArrayList<>();
-    options.add(choice1);
-    options.add(choice2);
-    options.add(choice3);
+        if (questionText.isEmpty() || choice1.isEmpty() || choice2.isEmpty() || choice3.isEmpty() || correctIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Please fill all fields and select the correct answer.");
+            return;
+        }
 
-    Question question = new Question(questionText, options, correctIndex);
+        // Create the Question object
+        List<String> options = new ArrayList<>();
+        options.add(choice1);
+        options.add(choice2);
+        options.add(choice3);
 
-    // Add question to the quiz
-    boolean added = instructor.addQuestionToQuiz(courseManager, lessonManager, courseId, lessonId, quizTitle, question);
-    if (added) {
-        JOptionPane.showMessageDialog(this, "Question added!");
-        // Clear fields for next question
-        Questiontxt.setText("");
-        Choice1txt.setText("");
-        Choice2txt.setText("");
-        Choice3txt.setText("");
-        buttonGroup1.clearSelection();  // clear radio buttons
+        Question question = new Question(questionText, options, correctIndex);
 
-        // Enable Finish Quiz button if at least one question exists
-        finishQuizButton.setEnabled(true);
-    } else {
-        JOptionPane.showMessageDialog(this, "Failed to add question.");
-    }
+        // Add question to the quiz
+        boolean added = instructor.addQuestionToQuiz(courseManager, lessonManager, courseId, lessonId, quizTitle, question);
+        if (added) {
+            JOptionPane.showMessageDialog(this, "Question added!");
+            // Clear fields for next question
+            Questiontxt.setText("");
+            Choice1txt.setText("");
+            Choice2txt.setText("");
+            Choice3txt.setText("");
+            buttonGroup1.clearSelection();  // clear radio buttons
+
+            // Enable Finish Quiz button if at least one question exists
+            finishQuizButton.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to add question.");
+        }
 
 
     }//GEN-LAST:event_AddButtonActionPerformed
 
     private void finishQuizButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finishQuizButtonActionPerformed
-    // 1. Get input from text fields
-String questionText = Questiontxt.getText().trim();
-String choice1 = Choice1txt.getText().trim();
-String choice2 = Choice2txt.getText().trim();
-String choice3 = Choice3txt.getText().trim();
+        // 1. Get input from text fields
+        String questionText = Questiontxt.getText().trim();
+        String choice1 = Choice1txt.getText().trim();
+        String choice2 = Choice2txt.getText().trim();
+        String choice3 = Choice3txt.getText().trim();
 
 // 2. Determine selected radio button
-int correctIndex = -1;
-if (radio1.isSelected()) correctIndex = 0;
-else if (radio2.isSelected()) correctIndex = 1;
-else if (radio3.isSelected()) correctIndex = 2;
+        int correctIndex = -1;
+        if (radio1.isSelected()) {
+            correctIndex = 0;
+        } else if (radio2.isSelected()) {
+            correctIndex = 1;
+        } else if (radio3.isSelected()) {
+            correctIndex = 2;
+        }
 
 // 3. Validate input
-if (questionText.isEmpty() || choice1.isEmpty() || choice2.isEmpty() || choice3.isEmpty() || correctIndex == -1) {
-    JOptionPane.showMessageDialog(this, "Please fill all fields and select the correct answer.");
-    return;
-}
+        if (questionText.isEmpty() || choice1.isEmpty() || choice2.isEmpty() || choice3.isEmpty() || correctIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Please fill all fields and select the correct answer.");
+            return;
+        }
 
 // 4. Create Question object
-List<String> options = new ArrayList<>();
-options.add(choice1);
-options.add(choice2);
-options.add(choice3);
-Question question = new Question(questionText, options, correctIndex);
+        List<String> options = new ArrayList<>();
+        options.add(choice1);
+        options.add(choice2);
+        options.add(choice3);
+        Question question = new Question(questionText, options, correctIndex);
 
 // 5. Add question to quiz using the Instructor method
-boolean added = instructor.addQuestionToQuiz(courseManager, lessonManager, courseId, lessonId, quizTitle, question);
+        boolean added = instructor.addQuestionToQuiz(courseManager, lessonManager, courseId, lessonId, quizTitle, question);
 
 // 6. Notify user
-if (added) {
-    JOptionPane.showMessageDialog(this, "Question added successfully!");
-    Questiontxt.setText("");
-    Choice1txt.setText("");
-    Choice2txt.setText("");
-    Choice3txt.setText("");
-    buttonGroup1.clearSelection();
+        if (added) {
+            JOptionPane.showMessageDialog(this, "Question added successfully!");
+            Questiontxt.setText("");
+            Choice1txt.setText("");
+            Choice2txt.setText("");
+            Choice3txt.setText("");
+            buttonGroup1.clearSelection();
 
-    finishQuizButton.setEnabled(true);
-} else {
-    JOptionPane.showMessageDialog(this, "Failed to add question.");
-}
+            finishQuizButton.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to add question.");
+        }
 
     }//GEN-LAST:event_finishQuizButtonActionPerformed
 
