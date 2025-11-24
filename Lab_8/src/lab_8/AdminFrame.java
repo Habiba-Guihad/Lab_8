@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
         this.db = db;
 
         initUI();
+        
         loadPendingCoursesTable();
     }
     //
@@ -33,32 +34,44 @@ import javax.swing.table.DefaultTableModel;
     }  
     private void loadPendingCoursesTable() {
 
-        if (courseManager == null) {
-            return;  // avoid null pointer if using the empty constructor
-        }
-
-        pendingCourses = courseManager.getPendingCourses();
-
-        String[] columns = {"Course ID", "Title", "Description", "Instructor ID"};
-
-        DefaultTableModel model = new DefaultTableModel(columns, 0) {
-            @Override
-            public boolean isCellEditable(int row, int col) {
-                return false;
-            }
-        };
-
-        for (Course c : pendingCourses) {
-            model.addRow(new Object[]{
-                c.getCourseId(),
-                c.getTitle(),
-                c.getDescription(),
-                c.getInstructorId()
-            });
-        }
-
-        courseTable.setModel(model);
+    if (courseManager == null) {
+        return;  // avoid null pointer if using the empty constructor
     }
+
+    pendingCourses = courseManager.getPendingCourses();
+
+    String[] columns = {"Course ID", "Title", "Description", "Instructor"};
+
+    DefaultTableModel model = new DefaultTableModel(columns, 0) {
+        @Override
+        public boolean isCellEditable(int row, int col) {
+            return false;
+        }
+    };
+
+    for (Course c : pendingCourses) {
+
+        String instructorId = c.getInstructorId();
+        String instructorName = "Unknown";
+
+        // Find the instructor inside users.json
+        for (User u : db.getUsers()) {
+            if (u.getUserId().equals(instructorId)) {
+                instructorName = u.getUsername();  // show username instead of hashed ID
+                break;
+            }
+        }
+
+        model.addRow(new Object[]{
+            c.getCourseId(),
+            c.getTitle(),
+            c.getDescription(),
+            instructorName
+        });
+    }
+
+    courseTable.setModel(model);
+}
 
     private void approveCourse() {
         int row = courseTable.getSelectedRow();
@@ -201,8 +214,7 @@ import javax.swing.table.DefaultTableModel;
     public static void main(String[] args) {
     JsonDatabaseManager db = new JsonDatabaseManager();
     CourseManager cm = new CourseManager(db);
-     new AdminFrame(cm, db).setVisible(true);
-
+    new AdminFrame(cm, db).setVisible(true);
    }  
     private JTable courseTable;
     private JScrollPane tableScroll;
@@ -215,4 +227,5 @@ import javax.swing.table.DefaultTableModel;
  }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
 
