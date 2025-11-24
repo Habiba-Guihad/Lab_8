@@ -233,7 +233,7 @@ public class TakeQuizFrame extends javax.swing.JFrame {
 
         //*new QuizResultFrame(student,selectedCourse,quiz, score).setVisible(true);
         new QuizResultFrame(student,selectedCourse,quiz, score,userAnswers).setVisible(true);
-        new QuizReviewFrame(quiz, userAnswers).setVisible(false);
+        new QuizReviewFrame(quiz, userAnswers,student).setVisible(false);
 
 // Check if course completed and award certificate
         if (student.hasCompletedEverything(selectedCourse)) {
