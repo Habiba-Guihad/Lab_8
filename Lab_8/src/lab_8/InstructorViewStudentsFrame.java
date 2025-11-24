@@ -27,61 +27,60 @@ public class InstructorViewStudentsFrame extends javax.swing.JFrame {
     public InstructorViewStudentsFrame() {
         initComponents();
     }
-
     private void loadStudents() {
-        DefaultTableModel model = (DefaultTableModel) tblStudents.getModel();
-        model.setRowCount(0);
+    DefaultTableModel model = (DefaultTableModel) tblStudents.getModel();
+    model.setRowCount(0);
 
-        ArrayList<User> allUsers = dbManager.getUsers();
-        ArrayList<Course> allCourses = dbManager.getCourses();
+    ArrayList<User> allUsers = dbManager.getUsers();
+    ArrayList<Course> allCourses = dbManager.getCourses();
 
-        // Filter courses belonging to this instructor
-        ArrayList<Course> instructorCourses = new ArrayList<>();
-        for (Course c : allCourses) {
-            if (c.getInstructorId().equals(instructor.getUserId())) {
-                instructorCourses.add(c);
-            }
-        }
-
-        for (User u : allUsers) {
-            if (u instanceof Student student) {
-
-                ArrayList<Integer> enrolled = student.getEnrolledCourses();
-                StringBuilder sb = new StringBuilder();
-
-                for (Integer courseIdNumber : enrolled) {
-
-                    // Match only courses that belong to this instructor
-                    Course matched = instructorCourses.stream()
-                            .filter(c -> {
-                                try {
-                                    int numericId = Integer.parseInt(c.getCourseId().replaceAll("\\D", ""));
-                                    return numericId == courseIdNumber;
-                                } catch (Exception e) {
-                                    return false;
-                                }
-                            })
-                            .findFirst()
-                            .orElse(null);
-
-                    if (matched != null) {
-                        if (sb.length() > 0) sb.append(", ");
-                        sb.append(matched.getTitle());
-                    }
-                }
-
-                // Skip students not enrolled in any course of this instructor
-                if (sb.length() == 0) continue;
-
-                model.addRow(new Object[]{
-                        student.getUserId(),
-                        student.getUsername(),
-                        student.getEmail(),
-                        sb.toString()
-                });
-            }
+    // Filter courses belonging to this instructor
+    ArrayList<Course> instructorCourses = new ArrayList<>();
+    for (Course c : allCourses) {
+        if (c.getInstructorId().equals(instructor.getUserId())) {
+            instructorCourses.add(c);
         }
     }
+
+    for (User u : allUsers) {
+        if (u instanceof Student student) {
+
+            ArrayList<Integer> enrolled = student.getEnrolledCourses();
+            StringBuilder sb = new StringBuilder();
+
+            for (Integer courseIdNumber : enrolled) {
+
+                Course matched = instructorCourses.stream()
+                        .filter(c -> {
+                            try {
+                                int numericId = Integer.parseInt(c.getCourseId().replaceAll("\\D", ""));
+                                return numericId == courseIdNumber;
+                            } catch (Exception e) {
+                                return false;
+                            }
+                        })
+                        .findFirst()
+                        .orElse(null);
+
+                if (matched != null) {
+                    if (sb.length() > 0) sb.append(", ");
+                    sb.append(matched.getTitle());
+                }
+            }
+
+            if (sb.length() == 0) continue;
+
+            // Add row with simple numeric ID
+            model.addRow(new Object[]{
+                    model.getRowCount() + 1,   // <-- FIXED HERE
+                    student.getUsername(),
+                    student.getEmail(),
+                    sb.toString()
+            });
+        }
+    }
+}
+
 
 
     /**
