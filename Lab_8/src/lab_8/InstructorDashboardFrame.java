@@ -1,5 +1,5 @@
 package lab_8;
-
+import java.awt.Window;
 import javax.swing.JOptionPane;
 
 /*
@@ -162,6 +162,10 @@ dbManager = new JsonDatabaseManager();
          int choice=JOptionPane.showConfirmDialog(this,"Are you sure you want to logout?","Logout",JOptionPane.YES_NO_OPTION);
         if(choice==JOptionPane.YES_OPTION){
             this.dispose();
+            Window[] windows = Window.getWindows();
+    for(Window w : windows){
+        w.dispose();
+    }
             new LoginFrame().setVisible(true);
         }
     }//GEN-LAST:event_jButton4ActionPerformed

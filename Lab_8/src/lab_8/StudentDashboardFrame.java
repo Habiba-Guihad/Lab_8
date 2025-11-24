@@ -2,6 +2,7 @@ package lab_8;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.awt.Window;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -455,6 +456,10 @@ initComponents();
         // TODO add your handling code here:
         int choice=JOptionPane.showConfirmDialog(this,"Are you sure you want to logout?","Logout",JOptionPane.YES_NO_OPTION);
         if(choice==JOptionPane.YES_OPTION){
+                 Window[] windows = Window.getWindows();
+                 for(Window w : windows){
+                 w.dispose();
+    }
             this.dispose();
             new LoginFrame().setVisible(true);
         }
