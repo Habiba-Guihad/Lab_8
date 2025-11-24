@@ -51,7 +51,7 @@
     {
         "approvalStatus": "PENDING",
         "description": "2",
-        "students": [],
+        "students": ["9b0d8d84-7395-4893-8b58-843f1193e9da"],
         "title": "a2",
         "courseId": "C6",
         "instructorId": "3d8e43f7-2a09-44ec-8a73-699579a7f9b1",
@@ -60,7 +60,7 @@
     {
         "approvalStatus": "PENDING",
         "description": "",
-        "students": [],
+        "students": ["9b0d8d84-7395-4893-8b58-843f1193e9da"],
         "title": "data",
         "courseId": "C7",
         "instructorId": "5da76081-4501-4235-a2f8-d657a41b0694",
@@ -69,7 +69,10 @@
     {
         "approvalStatus": "APPROVED",
         "description": "",
-        "students": ["ae415c07-3e08-47c9-83dc-8b50ce1088dc"],
+        "students": [
+            "ae415c07-3e08-47c9-83dc-8b50ce1088dc",
+            "9b0d8d84-7395-4893-8b58-843f1193e9da"
+        ],
         "title": "gggg",
         "courseId": "C8",
         "instructorId": "5da76081-4501-4235-a2f8-d657a41b0694",

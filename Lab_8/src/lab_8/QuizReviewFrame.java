@@ -18,23 +18,46 @@ public class QuizReviewFrame extends javax.swing.JFrame {
     public QuizReviewFrame() {
        initComponents();
 }
-    public QuizReviewFrame(Quiz quiz,List<Integer> userAnswers) {
-        initComponents();
-        jLabel1.setText("Review for: " + quiz.getTitle());
-        StringBuilder sb=new StringBuilder();
-        List <Question> questions=quiz.getQuestions();
-        for(int i=0;i<questions.size();i++){
-            Question q=questions.get(i);
-            int correctIndex=q.getCorrectIndex();
-            int userIndex=userAnswers.get(i);
-            sb.append("Q").append(i + 1).append(": ").append(q.getQuestionText()).append("\n");
-            sb.append("Your Answer: ").append(q.getOptions().get(userIndex)).append("\n");
-            sb.append("Correct Answer: ").append(q.getOptions().get(correctIndex)).append("\n");
-            sb.append("-----------------------------\n");
+//    public QuizReviewFrame(Quiz quiz,List<Integer> userAnswers) {
+//        initComponents();
+//        jLabel1.setText("Review for: " + quiz.getTitle());
+//        StringBuilder sb=new StringBuilder();
+//        List <Question> questions=quiz.getQuestions();
+//        for(int i=0;i<questions.size();i++){
+//            Question q=questions.get(i);
+//            int correctIndex=q.getCorrectIndex();
+//            int userIndex=userAnswers.get(i);
+//            sb.append("Q").append(i + 1).append(": ").append(q.getQuestionText()).append("\n");
+//            sb.append("Your Answer: ").append(q.getOptions().get(userIndex)).append("\n");
+//            sb.append("Correct Answer: ").append(q.getOptions().get(correctIndex)).append("\n");
+//            sb.append("-----------------------------\n");
+//    }
+//
+//    jTextArea1.setText(sb.toString());
+//    }
+    public QuizReviewFrame(Quiz quiz, List<Integer> userAnswers) {
+    initComponents();
+    jLabel1.setText("Review for: " + quiz.getTitle());
+
+    if (userAnswers == null || quiz.getQuestions() == null) {
+        jTextArea1.setText("No answers to review.");
+        return;
+    }
+     
+    StringBuilder sb = new StringBuilder();
+    List<Question> questions = quiz.getQuestions();
+    for (int i = 0; i < questions.size(); i++) {
+        Question q = questions.get(i);
+        int correctIndex = q.getCorrectIndex();
+        int userIndex = userAnswers.get(i);
+        sb.append("Q").append(i + 1).append(": ").append(q.getQuestionText()).append("\n");
+        sb.append("Your Answer: ").append(q.getOptions().get(userIndex)).append("\n");
+        sb.append("Correct Answer: ").append(q.getOptions().get(correctIndex)).append("\n");
+        sb.append("-----------------------------\n");
     }
 
     jTextArea1.setText(sb.toString());
-    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.

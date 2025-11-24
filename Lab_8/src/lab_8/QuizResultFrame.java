@@ -4,6 +4,7 @@
  */
 package lab_8;
 import java.util.List;
+import javax.swing.*;
 /**
  *
  * @author Dell
@@ -22,7 +23,7 @@ public class QuizResultFrame extends javax.swing.JFrame {
         initComponents();
     }
 
-    public QuizResultFrame(Student student,Course course,Quiz quiz, int score) {
+    public QuizResultFrame(Student student,Course course,Quiz quiz, int score, List <Integer> userAnswers) {
         initComponents();
         this.student = student;
         this.selectedcourse = course;
@@ -30,6 +31,7 @@ public class QuizResultFrame extends javax.swing.JFrame {
         this.score = score;
         this.student=student;
         this.selectedcourse=course;
+        this.userAnswers=userAnswers;
         jLabel1.setText(quiz.getTitle());
         jLabel2.setText("Your score: " + score + "%");
     }
@@ -126,6 +128,10 @@ public class QuizResultFrame extends javax.swing.JFrame {
 
     private void btnReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReviewActionPerformed
         // TODO add your handling code here:
+        if (userAnswers == null || userAnswers.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No answers to review.");
+        return;
+    }
         QuizReviewFrame review = new QuizReviewFrame(quiz, userAnswers);
         review.setVisible(true);
         this.dispose();

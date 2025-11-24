@@ -231,8 +231,9 @@ public class TakeQuizFrame extends javax.swing.JFrame {
 // Update student's quiz score and save
         student.addQuizScore(courseIdInt, quiz, score);
 
-        new QuizResultFrame(student,selectedCourse,quiz, score).setVisible(true);
-        new QuizReviewFrame(quiz, userAnswers).setVisible(true);
+        //*new QuizResultFrame(student,selectedCourse,quiz, score).setVisible(true);
+        new QuizResultFrame(student,selectedCourse,quiz, score,userAnswers).setVisible(true);
+        new QuizReviewFrame(quiz, userAnswers).setVisible(false);
 
 // Check if course completed and award certificate
         if (student.hasCompletedEverything(selectedCourse)) {
@@ -275,16 +276,18 @@ public class TakeQuizFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TakeQuizFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
+        boolean testMode=true;
+        if(testMode){
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new TakeQuizFrame().setVisible(true);
+                //new TakeQuizFrame().setVisible(true);
+                new QuizReviewFrame().setVisible(true);
             }
         });
     }
-
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnSubmit;
