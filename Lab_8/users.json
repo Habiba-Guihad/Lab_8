@@ -65,6 +65,10 @@
                 {
                     "score": 100,
                     "quizTitle": "hhh"
+                },
+                {
+                    "score": 100,
+                    "quizTitle": "hhh"
                 }
             ]
         },
@@ -100,6 +104,10 @@
         "progressData": {
             "completedLessons": {"8": ["L1"]},
             "quizAttempts": [
+                {
+                    "score": 100,
+                    "quizTitle": "hhh"
+                },
                 {
                     "score": 100,
                     "quizTitle": "hhh"

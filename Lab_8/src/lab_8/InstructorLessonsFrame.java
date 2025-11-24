@@ -237,6 +237,7 @@ Lesson lesson = new Lesson(newLessonId, lessonTitle, lessonContent);
 selectedCourse.addLesson(lesson);
 dbManager.saveCourses();
 loadLessons();
+new InstructorCreateQuiz(instructor,courseManager,lessonManager).setVisible(true);
 
     }//GEN-LAST:event_CreateButtonActionPerformed
 

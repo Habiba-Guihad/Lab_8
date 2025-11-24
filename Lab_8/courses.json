@@ -6,35 +6,42 @@
         "title": "ttttt",
         "courseId": "C1",
         "instructorId": "5da76081-4501-4235-a2f8-d657a41b0694",
-        "lessons": [{
-            "quiz": {
-                "questions": [
-                    {
-                        "options": [
-                            "a",
-                            "a",
-                            "a"
-                        ],
-                        "correctIndex": 0,
-                        "questionText": "2"
-                    },
-                    {
-                        "options": [
-                            "b",
-                            "b",
-                            "b"
-                        ],
-                        "correctIndex": 0,
-                        "questionText": "3"
-                    }
-                ],
-                "passingScore": 0,
-                "title": "1"
+        "lessons": [
+            {
+                "quiz": {
+                    "questions": [
+                        {
+                            "options": [
+                                "1",
+                                "2",
+                                "3"
+                            ],
+                            "correctIndex": 1,
+                            "questionText": "1+1"
+                        },
+                        {
+                            "options": [
+                                "1",
+                                "2",
+                                "3"
+                            ],
+                            "correctIndex": 0,
+                            "questionText": "1"
+                        }
+                    ],
+                    "passingScore": 0,
+                    "title": "ooooo"
+                },
+                "lessonId": "L1",
+                "title": "hhh",
+                "content": ""
             },
-            "lessonId": "L1",
-            "title": "hhh",
-            "content": ""
-        }]
+            {
+                "lessonId": "L2",
+                "title": "yyyy",
+                "content": ""
+            }
+        ]
     },
     {
         "approvalStatus": "APPROVED",
