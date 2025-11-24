@@ -11,32 +11,17 @@ import java.util.List;
  */
 
 public class QuizReviewFrame extends javax.swing.JFrame {
-
+private Student student;
     /**
      * Creates new form QuizReviewFrame
      */
     public QuizReviewFrame() {
        initComponents();
 }
-//    public QuizReviewFrame(Quiz quiz,List<Integer> userAnswers) {
-//        initComponents();
-//        jLabel1.setText("Review for: " + quiz.getTitle());
-//        StringBuilder sb=new StringBuilder();
-//        List <Question> questions=quiz.getQuestions();
-//        for(int i=0;i<questions.size();i++){
-//            Question q=questions.get(i);
-//            int correctIndex=q.getCorrectIndex();
-//            int userIndex=userAnswers.get(i);
-//            sb.append("Q").append(i + 1).append(": ").append(q.getQuestionText()).append("\n");
-//            sb.append("Your Answer: ").append(q.getOptions().get(userIndex)).append("\n");
-//            sb.append("Correct Answer: ").append(q.getOptions().get(correctIndex)).append("\n");
-//            sb.append("-----------------------------\n");
-//    }
-//
-//    jTextArea1.setText(sb.toString());
-//    }
-    public QuizReviewFrame(Quiz quiz, List<Integer> userAnswers) {
+
+    public QuizReviewFrame(Quiz quiz, List<Integer> userAnswers,Student student) {
     initComponents();
+    this.student=student;
     jLabel1.setText("Review for: " + quiz.getTitle());
 
     if (userAnswers == null || quiz.getQuestions() == null) {
@@ -71,6 +56,7 @@ public class QuizReviewFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,6 +68,13 @@ public class QuizReviewFrame extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jTextArea1.setWrapStyleWord(true);
         jScrollPane1.setViewportView(jTextArea1);
+
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,6 +88,10 @@ public class QuizReviewFrame extends javax.swing.JFrame {
                 .addContainerGap(65, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(61, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnBack)
+                .addGap(158, 158, 158))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,11 +100,19 @@ public class QuizReviewFrame extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnBack)
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        this.dispose(); // Close the current frame
+        new StudentDashboardFrame(student).setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,6 +150,7 @@ public class QuizReviewFrame extends javax.swing.JFrame {
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;

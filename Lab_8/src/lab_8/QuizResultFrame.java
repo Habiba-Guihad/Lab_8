@@ -132,7 +132,7 @@ public class QuizResultFrame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "No answers to review.");
         return;
     }
-        QuizReviewFrame review = new QuizReviewFrame(quiz, userAnswers);
+        QuizReviewFrame review = new QuizReviewFrame(quiz, userAnswers,student);
         review.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnReviewActionPerformed
