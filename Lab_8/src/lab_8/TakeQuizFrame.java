@@ -62,7 +62,6 @@ public class TakeQuizFrame extends javax.swing.JFrame {
         jRadioButton1.setText(opts.size() > 0 ? opts.get(0) : "");
         jRadioButton2.setText(opts.size() > 1 ? opts.get(1) : "");
         jRadioButton3.setText(opts.size() > 2 ? opts.get(2) : "");
-        jRadioButton4.setText(opts.size() > 3 ? opts.get(3) : "");
 
         choiceGroup.clearSelection();
         btnNext.setVisible(currentIndex < quiz.getQuestions().size() - 1);
@@ -78,9 +77,6 @@ public class TakeQuizFrame extends javax.swing.JFrame {
         }
         if (jRadioButton3.isSelected()) {
             return 2;
-        }
-        if (jRadioButton4.isSelected()) {
-            return 3;
         }
         return -1;
     }
@@ -100,7 +96,6 @@ public class TakeQuizFrame extends javax.swing.JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
         btnNext = new javax.swing.JButton();
         btnSubmit = new javax.swing.JButton();
 
@@ -123,9 +118,6 @@ public class TakeQuizFrame extends javax.swing.JFrame {
 
         choiceGroup.add(jRadioButton3);
         jRadioButton3.setText("jRadioButton3");
-
-        choiceGroup.add(jRadioButton4);
-        jRadioButton4.setText("jRadioButton4");
 
         btnNext.setText("Next");
         btnNext.addActionListener(new java.awt.event.ActionListener() {
@@ -160,9 +152,6 @@ public class TakeQuizFrame extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jRadioButton3))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jRadioButton4))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addComponent(jLabel2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -186,9 +175,7 @@ public class TakeQuizFrame extends javax.swing.JFrame {
                 .addComponent(jRadioButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jRadioButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton4)
-                .addGap(18, 18, 18)
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNext)
                     .addComponent(btnSubmit))
@@ -242,7 +229,7 @@ public class TakeQuizFrame extends javax.swing.JFrame {
                     .get(student.getCertificates().size() - 1);
             db.generateCertificatePDF(student, selectedCourse, cert);
             db.saveUsers();
-            JOptionPane.showMessageDialog(null, "🎉 Course completed! Certificate issued.");
+            JOptionPane.showMessageDialog(null, " Course completed! Certificate issued.");
         }
 
         this.dispose();
@@ -297,6 +284,5 @@ public class TakeQuizFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
     // End of variables declaration//GEN-END:variables
 }
