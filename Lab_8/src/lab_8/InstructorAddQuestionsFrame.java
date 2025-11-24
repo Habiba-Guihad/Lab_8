@@ -292,7 +292,7 @@ public class InstructorAddQuestionsFrame extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Failed to add question.");
         }
-this.dispose();
+this.dispose();//zawedt diii
     }//GEN-LAST:event_finishQuizButtonActionPerformed
 
     /**

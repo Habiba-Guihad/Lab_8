@@ -8,15 +8,26 @@
         "instructorId": "5da76081-4501-4235-a2f8-d657a41b0694",
         "lessons": [{
             "quiz": {
-                "questions": [{
-                    "options": [
-                        "a",
-                        "b",
-                        "c"
-                    ],
-                    "correctIndex": 0,
-                    "questionText": "1"
-                }],
+                "questions": [
+                    {
+                        "options": [
+                            "a",
+                            "a",
+                            "a"
+                        ],
+                        "correctIndex": 0,
+                        "questionText": "2"
+                    },
+                    {
+                        "options": [
+                            "b",
+                            "b",
+                            "b"
+                        ],
+                        "correctIndex": 0,
+                        "questionText": "3"
+                    }
+                ],
                 "passingScore": 0,
                 "title": "1"
             },
