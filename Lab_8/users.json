@@ -57,6 +57,10 @@
                 {
                     "score": 100,
                     "quizTitle": "hhh"
+                },
+                {
+                    "score": 100,
+                    "quizTitle": "hhh"
                 }
             ]
         },
@@ -91,10 +95,16 @@
         "progress": {"8": ["L1"]},
         "progressData": {
             "completedLessons": {"8": ["L1"]},
-            "quizAttempts": [{
-                "score": 100,
-                "quizTitle": "hhh"
-            }]
+            "quizAttempts": [
+                {
+                    "score": 100,
+                    "quizTitle": "hhh"
+                },
+                {
+                    "score": 100,
+                    "quizTitle": "hhh"
+                }
+            ]
         },
         "userId": "9b0d8d84-7395-4893-8b58-843f1193e9da",
         "email": "aa@",

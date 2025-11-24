@@ -7,6 +7,19 @@
         "courseId": "C1",
         "instructorId": "5da76081-4501-4235-a2f8-d657a41b0694",
         "lessons": [{
+            "quiz": {
+                "questions": [{
+                    "options": [
+                        "a",
+                        "b",
+                        "c"
+                    ],
+                    "correctIndex": 0,
+                    "questionText": "1"
+                }],
+                "passingScore": 0,
+                "title": "1"
+            },
             "lessonId": "L1",
             "title": "hhh",
             "content": ""
