@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package lab_8;
+import java.awt.Window;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -112,7 +113,15 @@ import javax.swing.table.DefaultTableModel;
     }
 
     private void logout() {
-        System.exit(0);
+        int choice=JOptionPane.showConfirmDialog(this,"Are you sure you want to logout?","Logout",JOptionPane.YES_NO_OPTION);
+        if(choice==JOptionPane.YES_OPTION){
+                 Window[] windows = Window.getWindows();
+                 for(Window w : windows){
+                 w.dispose();
+    }
+            this.dispose();
+            new LoginFrame().setVisible(true);
+        }
     }
 
     /**
