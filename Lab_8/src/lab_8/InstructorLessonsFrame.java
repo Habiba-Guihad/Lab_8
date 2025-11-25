@@ -60,18 +60,27 @@ tableModel.addRow(new Object[]{"", "", ""});
 }
 }
 private void setupCourseIdDropdown() {
-// Get the Course ID column index (assuming it's the 4th column, index 3)
-int courseIdCol = 3;
-// Create a JComboBox containing this instructor's courses
-List<Course> myCourses = courseManager.getCoursesByInstructor(instructor.getUserId());
-JComboBox<String> courseComboBox = new JComboBox<>();
-for (Course c : myCourses) {
-    courseComboBox.addItem(c.getCourseId());
-}
+    // Course ID column index (4th column)
+    int courseIdCol = 3;
 
-// Set JComboBox as editor for the Course ID column
-LessonsTable.getColumnModel().getColumn(courseIdCol).setCellEditor(new DefaultCellEditor(courseComboBox));
+    // Get ONLY this instructor’s courses
+    List<Course> myCourses = courseManager.getCoursesByInstructor(instructor.getUserId());
 
+    // Create combo box
+    JComboBox<String> courseComboBox = new JComboBox<>();
+
+    // Filter courses: instructor-owned + (Pending OR Approved)
+    for (Course c : myCourses) {
+        if (c.getApprovalStatus() == Course.ApprovalStatus.PENDING ||
+            c.getApprovalStatus() == Course.ApprovalStatus.APPROVED) 
+        {
+            courseComboBox.addItem(c.getCourseId());
+        }
+    }
+
+    // Set combo box as the editor for the column
+    LessonsTable.getColumnModel().getColumn(courseIdCol)
+            .setCellEditor(new DefaultCellEditor(courseComboBox));
 }
 
     @SuppressWarnings("unchecked")
@@ -206,13 +215,16 @@ if (courseId.isEmpty()) {
 
 // Find the course
 selectedCourse = dbManager.getCourses().stream()
-        .filter(c -> c.getCourseId().equals(courseId) &&
-                     c.getInstructorId().equals(instructor.getUserId()))
+        .filter(c -> 
+            c.getCourseId().equals(courseId) &&
+            c.getInstructorId().equals(instructor.getUserId())
+        )
         .findFirst()
         .orElse(null);
 
+
 if (selectedCourse == null) {
-    JOptionPane.showMessageDialog(this, "Course not found or you don't own this course.");
+    JOptionPane.showMessageDialog(this, "Cannot add lesson to this course.");
     return;
 }
 
